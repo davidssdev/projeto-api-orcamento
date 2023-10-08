@@ -7,23 +7,23 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table
+@Table(name = "modalidadeAplicacao")
 public class ModalidadeAplicacaoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private Integer id;
 
-    @Column(name = "Codigo", nullable = false)
-    private int Codigo;
+    @Column(name = "codigo", nullable = false)
+    private Integer codigo;
 
-    @Column(name = "Nome", nullable = false)
-    private String Nome;
+    @Column(name = "nome", nullable = false)
+    private String nome;
 
-    @Column(name = "DataCadastro", nullable = false)
-    private Date DataCadastro;
+    @Column(name = "dataCadastro", nullable = false)
+    private Date dataCadastro;
 
-    @Column(name = "DataAlteracao", nullable = true)
-    private Date DataAlteracao;
+    @Column(name = "dataAlteracao", nullable = true)
+    private Date dataAlteracao;
 
 }

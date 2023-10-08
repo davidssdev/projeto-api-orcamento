@@ -7,79 +7,79 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "Lancamentos")
+@Table(name = "lancamentos")
 public class LancamentosModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private Integer id;
 
-    @Column(name = "LancamentoInvalido", nullable = false)
-    private byte LancamentoInvalido;
+    @Column(name = "lancamentoInvalido", nullable = false)
+    private Byte lancamentoInvalido;
 
-    @Column(name = "NumeroLancamento", nullable = false)
-    private int NumeroLancamento;
+    @Column(name = "numeroLancamento", nullable = false)
+    private Integer numeroLancamento;
 
-    @Column(name = "IDLancamento", nullable = false)
-    private int IDLancamento;
+    @Column(name = "idLancamento", nullable = false)
+    private Integer idLancamento;
 
-    @Column(name = "DataLancamento", nullable = false)
-    private Date DataLancamento;
+    @Column(name = "dataLancamento", nullable = false)
+    private Date dataLancamento;
 
-    @Column(name = "IDLancamentoPai", nullable = false)
-    private int IDLancamentoPai;
+    @Column(name = "idLancamentoPai", nullable = false)
+    private Integer idLancamentoPai;
 
-    @Column(name = "IDUnidade", nullable = false)
-    private int IDUnidade;
+    @Column(name = "idUnidade", nullable = false)
+    private Integer idUnidade;
 
-    @Column(name = "Descricao", nullable = false, length = 255)
-    private String Descricao;
+    @Column(name = "descricao", nullable = false, length = 255)
+    private String descricao;
 
-    @Column(name = "IDUnidadeOrcamento", nullable = false)
-    private int IDUnidadeOrcamento;
+    @Column(name = "idUnidadeOrcamento", nullable = false)
+    private Integer idUnidadeOrcamento;
 
-    @Column(name = "IDPrograma", nullable = false)
-    private int IDPrograma;
+    @Column(name = "idPrograma", nullable = false)
+    private Integer idPrograma;
 
-    @Column(name = "IDAcao", nullable = false)
-    private int IDAcao;
+    @Column(name = "idAcao", nullable = false)
+    private Integer idAcao;
 
-    @Column(name = "IDFonteRecurso", nullable = false)
-    private int IDFonteRecurso;
+    @Column(name = "idFonteRecurso", nullable = false)
+    private Integer idFonteRecurso;
 
-    @Column(name = "IDGrupoDespesa", nullable = false)
-    private int IDGrupoDespesa;
+    @Column(name = "idGrupoDespesa", nullable = false)
+    private Integer idGrupoDespesa;
 
-    @Column(name = "IDModalidadeAplicacao", nullable = false)
-    private int IDModalidadeAplicacao;
+    @Column(name = "idModalidadeAplicacao", nullable = false)
+    private Integer idModalidadeAplicacao;
 
-    @Column(name = "IDElementoDespesa", nullable = false)
-    private int IDElementoDespesa;
+    @Column(name = "idElementoDespesa", nullable = false)
+    private Integer idElementoDespesa;
 
-    @Column(name = "IDSolicitante", nullable = false)
-    private int IDSolicitante;
+    @Column(name = "idSolicitante", nullable = false)
+    private Integer idSolicitante;
 
-    @Column(name = "GED", nullable = false, length = 27)
-    private char GED;
+    @Column(name = "ged", nullable = false, length = 27)
+    private char ged;
 
-    @Column(name = "Contrato", nullable = false, length = 255)
-    private String Contrato;
+    @Column(name = "contrato", nullable = false, length = 255)
+    private String contrato;
 
-    @Column(name = "IDObjetivoEstrategico", nullable = false)
-    private int IDobjetivoEstrategico;
+    @Column(name = "idObjetivoEstrategico", nullable = false)
+    private Integer idObjetivoEstrategico;
 
-    @Column(name = "Valor", nullable = false)
-    private double Valor;
+    @Column(name = "valor", nullable = false)
+    private Double valor;
 
-    @Column(name = "IDTipoTransacao", nullable = false)
-    private int IDTipoTransacao;
+    @Column(name = "idTipoTransacao", nullable = false)
+    private Integer idTipoTransacao;
 
-    @Column(name = "DataCadastro", nullable = false)
-    private Date DataCadastro;
+    @Column(name = "dataCadastro", nullable = false)
+    private Date dataCadastro;
 
-    @Column(name = "DataAlteracao", nullable = false)
-    private Date DataAlteracao;
+    @Column(name = "dataAlteracao", nullable = false)
+    private Date dataAlteracao;
 
-    @Column(name = "AnoOrcamento", nullable = false)
-    private int AnoOrcamento;
+    @Column(name = "anoOrcamento", nullable = false)
+    private Integer anoOrcamento;
 }
