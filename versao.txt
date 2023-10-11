@@ -1,0 +1,12 @@
+Versão 1.0.28
+
+	- Implementação da classe swaggerConfig
+	- Adicionado as dependencias do swagger e dos DBs
+
+Versão 1.0.26
+
+	- Implementações dos repositorios geral das models
+
+Versão 1.0.13
+
+	- Implementações das models geral do banco
