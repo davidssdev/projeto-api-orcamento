@@ -1,3 +1,7 @@
+
+Versão 1.0.41
+    - Implementação dos forms das entidades
+
 Versão 1.0.28
 
 	- Implementação da classe swaggerConfig
