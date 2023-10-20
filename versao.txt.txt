@@ -1,7 +1,0 @@
-Versão 0.0.26
-
-	- Implementações dos repositorios gerais das models
-
-Versão 0.0.13
-
-	- Implementações das models gerais do banco
