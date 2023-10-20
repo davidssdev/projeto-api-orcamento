@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -20,8 +21,8 @@ public class TipoLancamentoModel {
     private String nome;
 
     @Column(name = "dataCadastro", nullable = false)
-    private Date dataCadastro;
+    private LocalDate dataCadastro;
 
     @Column(name = "dataAlteracao", nullable = true)
-    private Date dataAlteracao;
+    private LocalDate dataAlteracao;
 }

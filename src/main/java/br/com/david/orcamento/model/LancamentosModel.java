@@ -3,6 +3,7 @@ package br.com.david.orcamento.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -24,7 +25,7 @@ public class LancamentosModel {
     private Integer idLancamento;
 
     @Column(name = "dataLancamento", nullable = false)
-    private Date dataLancamento;
+    private LocalDate dataLancamento;
 
     @Column(name = "idLancamentoPai", nullable = false)
     private Integer idLancamentoPai;
@@ -75,10 +76,10 @@ public class LancamentosModel {
     private Integer idTipoTransacao;
 
     @Column(name = "dataCadastro", nullable = false)
-    private Date dataCadastro;
+    private LocalDate dataCadastro;
 
     @Column(name = "dataAlteracao", nullable = false)
-    private Date dataAlteracao;
+    private LocalDate dataAlteracao;
 
     @Column(name = "anoOrcamento", nullable = false)
     private Integer anoOrcamento;

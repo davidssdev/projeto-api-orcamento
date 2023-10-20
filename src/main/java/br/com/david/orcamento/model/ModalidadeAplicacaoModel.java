@@ -3,6 +3,7 @@ package br.com.david.orcamento.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -21,9 +22,9 @@ public class ModalidadeAplicacaoModel {
     private String nome;
 
     @Column(name = "dataCadastro", nullable = false)
-    private Date dataCadastro;
+    private LocalDate dataCadastro;
 
     @Column(name = "dataAlteracao", nullable = true)
-    private Date dataAlteracao;
+    private LocalDate dataAlteracao;
 
 }

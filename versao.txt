@@ -1,16 +1,18 @@
+Versão 1.0.45
+    - Implementação do service e controller da acao e elemento de despesa.
 
 Versão 1.0.41
-    - Implementação dos forms das entidades
+    - Implementação dos forms das entidades.
 
 Versão 1.0.28
 
-	- Implementação da classe swaggerConfig
-	- Adicionado as dependencias do swagger e dos DBs
+    - Implementação da classe swaggerConfig.
+    - Adicionado as dependencias do swagger e dos DBs.
 
 Versão 1.0.26
 
-	- Implementações dos repositorios geral das models
+	- Implementações dos repositorios geral das models.
 
 Versão 1.0.13
 
-	- Implementações das models geral do banco
+	- Implementações das models geral do banco.
