@@ -7,6 +7,7 @@ import br.com.david.orcamento.rest.form.ElementoDespesaForm;
 import br.com.david.orcamento.service.exceptions.DataIntegrityException;
 import br.com.david.orcamento.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -35,18 +36,18 @@ public class ElementoDespesaService {
         return elementoList;
     }
 
-    public ElementoDespesaModel insertElemento(@RequestBody ElementoDespesaForm elementoDespesaForm){
+    public ElementoDespesaModel insertElemento(ElementoDespesaForm elementoDespesaForm){
         try{
             ElementoDespesaModel novoElemento = convertElementoFormToElementoForm(elementoDespesaForm);
             novoElemento = elementoDespesaRepository.save(novoElemento);
 
             return novoElemento;
-        }catch (DataIntegrityException e){
-            throw new DataIntegrityException("Erro ao tentar realizar o cadastro do tipo: "+ AcaoForm.class.getName());
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("Erro ao tentar realizar o cadastro do tipo: "+ ElementoDespesaModel.class.getName());
         }
     }
 
-    public ElementoDespesaModel updateElemento(ElementoDespesaForm elementoDespesaForm,Integer id){
+    public ElementoDespesaModel updateElemento(ElementoDespesaForm elementoDespesaForm, Integer id){
         try{
             Optional<ElementoDespesaModel> elementoExist = elementoDespesaRepository.findById(id);
             var dtAtual = LocalDate.now();
@@ -60,9 +61,9 @@ public class ElementoDespesaService {
                 elementoDespesaRepository.save(elementoUpdate);
                 return elementoUpdate;
             }else {
-                throw new DataIntegrityException("Objeto não encontrado!");
+                throw new DataIntegrityException("Códido de ID: "+id+" não encontrado!");
             }
-        }catch (DataIntegrityException e){
+        }catch (DataIntegrityViolationException e){
             throw  new DataIntegrityException("Campo(s) obrigatório(s) não foi(foram) preenchido(s)");
         }
     }
@@ -71,16 +72,17 @@ public class ElementoDespesaService {
         try{
             if(elementoDespesaRepository.existsById(id)){
                 elementoDespesaRepository.deleteById(id);
+            }else {
+                throw new DataIntegrityException("Códido de ID: "+id+" não encontrado!");
             }
-        }catch (DataIntegrityException e){
+        }catch (DataIntegrityViolationException e){
             throw new DataIntegrityException("Objeto não encontrado!");
         }
     }
 
     public ElementoDespesaModel convertElementoFormToElementoForm(ElementoDespesaForm elementoDespesaForm){
-
-        var dtAtual = LocalDate.now();
         ElementoDespesaModel elementoModel = new ElementoDespesaModel();
+        var dtAtual = LocalDate.now();
 
         elementoModel.setCodigo(elementoDespesaForm.getCodigo());
         elementoModel.setNome(elementoDespesaForm.getNome());

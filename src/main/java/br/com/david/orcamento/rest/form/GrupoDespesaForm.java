@@ -4,14 +4,14 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
 public class GrupoDespesaForm {
 
-    @NotEmpty
-    @NotBlank(message = "O codigo não pode ser em branco!")
-    private Integer codigo;
+    @NotNull(message = "O codigo não pode ser em branco!")
+    private Double codigo;
 
     @NotEmpty
     @NotBlank(message = "O nome não pode ser em branco!")

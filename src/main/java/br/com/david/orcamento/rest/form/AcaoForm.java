@@ -1,16 +1,17 @@
 package br.com.david.orcamento.rest.form;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
 public class AcaoForm {
 
-    @NotEmpty
-    @NotBlank(message = "O codigo não pode ser em branco!")
+    @NotNull(message = "O código não pode ser nulo!")
     private Integer codigo;
 
     @NotEmpty

@@ -4,13 +4,13 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
 public class FonteRecursoForm {
 
-    @NotEmpty
-    @NotBlank(message = "O codigo não pode ser em branco!")
+    @NotNull(message = "O codigo não pode ser em branco!")
     private Integer codigo;
 
     @NotEmpty

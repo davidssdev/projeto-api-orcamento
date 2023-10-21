@@ -1,7 +1,13 @@
+Versão 1.0.65
+
+    - Implementação dos serviços e controllers geral.
+
 Versão 1.0.45
+
     - Implementação do service e controller da acao e elemento de despesa.
 
 Versão 1.0.41
+
     - Implementação dos forms das entidades.
 
 Versão 1.0.28

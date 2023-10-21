@@ -1,6 +1,8 @@
 package br.com.david.orcamento.rest.controller;
 
 import br.com.david.orcamento.model.ElementoDespesaModel;
+import br.com.david.orcamento.model.ElementoDespesaModel;
+import br.com.david.orcamento.rest.form.AcaoForm;
 import br.com.david.orcamento.rest.form.ElementoDespesaForm;
 import br.com.david.orcamento.service.ElementoDespesaService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -20,7 +23,7 @@ public class ElementoDespesaController {
     ElementoDespesaService elementoDespesaService;
 
     @GetMapping
-    public ResponseEntity<List<ElementoDespesaModel>> findALl(){
+    public ResponseEntity<List<ElementoDespesaModel>> findAll(){
         List<ElementoDespesaModel> elementoList = elementoDespesaService.findAllElemento();
         return ResponseEntity.ok().body(elementoList);
     }
@@ -32,7 +35,7 @@ public class ElementoDespesaController {
     }
 
     @PostMapping
-    public ResponseEntity<ElementoDespesaModel> insert(@RequestBody ElementoDespesaForm elementoDespesaForm, BindingResult br){
+    public ResponseEntity<ElementoDespesaModel> insert(@Valid @RequestBody ElementoDespesaForm elementoDespesaForm, BindingResult br){
         if(br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
@@ -42,17 +45,17 @@ public class ElementoDespesaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ElementoDespesaModel> update(@RequestBody ElementoDespesaForm elementoDespesaForm, @PathVariable("id") Integer id, BindingResult br){
-        if (br.hasErrors()){
+    public ResponseEntity<ElementoDespesaModel> update(@Valid @RequestBody ElementoDespesaForm elementoDespesaForm, @PathVariable("id") Integer id, BindingResult br){
+        if(br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
-            ElementoDespesaModel elementoUpdate = elementoDespesaService.updateElemento(elementoDespesaForm, id);
-            return ResponseEntity.ok().body(elementoUpdate);
+            ElementoDespesaModel updateElemento = elementoDespesaService.updateElemento(elementoDespesaForm, id);
+            return ResponseEntity.ok().body(updateElemento);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(Integer id){
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer id){
         elementoDespesaService.deleteElemento(id);
         return ResponseEntity.noContent().build();
     }

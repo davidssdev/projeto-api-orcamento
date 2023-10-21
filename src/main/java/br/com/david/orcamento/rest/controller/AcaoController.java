@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -32,7 +34,7 @@ public class AcaoController {
     }
 
     @PostMapping
-    public ResponseEntity<AcaoModel> insert(@RequestBody AcaoForm acaoForm, BindingResult br){
+    public ResponseEntity<AcaoModel> insert(@Valid @RequestBody AcaoForm acaoForm, BindingResult br){
         if(br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
@@ -42,7 +44,7 @@ public class AcaoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AcaoModel> update(@RequestBody AcaoForm acaoForm, @PathVariable("id") Integer id, BindingResult br){
+    public ResponseEntity<AcaoModel> update(@Valid @RequestBody AcaoForm acaoForm, @PathVariable("id") Integer id, BindingResult br){
         if(br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
@@ -54,6 +56,7 @@ public class AcaoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id){
         acaoServcie.deleteAcao(id);
+
         return ResponseEntity.noContent().build();
     }
 }

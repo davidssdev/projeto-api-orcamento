@@ -5,8 +5,8 @@ import br.com.david.orcamento.repository.AcaoRepository;
 import br.com.david.orcamento.rest.form.AcaoForm;
 import br.com.david.orcamento.service.exceptions.DataIntegrityException;
 import br.com.david.orcamento.service.exceptions.ObjectNotFoundException;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -39,8 +39,8 @@ public class AcaoService {
             AcaoModel novaAcao = convertAcaoFormToAcaoModel(acaoForm);
             novaAcao = acaoRepository.save(novaAcao);
             return novaAcao;
-        }catch (DataIntegrityException e){
-            throw new DataIntegrityException("Erro ao tentar realizar o cadastro do tipo: "+ AcaoForm.class.getName());
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("Erro ao tentar realizar o cadastro do tipo: "+ AcaoModel.class.getName());
         }
     }
 
@@ -60,7 +60,7 @@ public class AcaoService {
             }else {
                 throw new DataIntegrityException("Códido de ID: "+id+" não encontrado!");
             }
-        }catch (DataIntegrityException e){
+        }catch (DataIntegrityViolationException e){
             throw  new DataIntegrityException("Campo(s) obrigatório(s) não foi(foram) preenchido(s)");
         }
     }
@@ -69,20 +69,22 @@ public class AcaoService {
         try{
             if(acaoRepository.existsById(id)){
                 acaoRepository.deleteById(id);
+            }else {
+                throw new DataIntegrityException("Códido de ID: "+id+" não encontrado!");
             }
-        }catch (DataIntegrityException e){
+        }catch (DataIntegrityViolationException e){
             throw new DataIntegrityException("Objeto não encontrado!");
         }
     }
 
     public AcaoModel convertAcaoFormToAcaoModel(AcaoForm acaoForm){
+        AcaoModel convertAcao = new AcaoModel();
         var dtAtual = LocalDate.now();
-        AcaoModel novaAcao = new AcaoModel();
 
-        novaAcao.setCodigo(acaoForm.getCodigo());
-        novaAcao.setNome(acaoForm.getNome());
-        novaAcao.setDataCadastro(dtAtual);
+        convertAcao.setCodigo(acaoForm.getCodigo());
+        convertAcao.setNome(acaoForm.getNome());
+        convertAcao.setDataCadastro(dtAtual);
 
-        return novaAcao;
+        return convertAcao;
     }
 }

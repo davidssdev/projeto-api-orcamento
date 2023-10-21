@@ -4,12 +4,11 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Data
 @Table(name = "lancamentos")
-public class LancamentosModel {
+public class LancamentoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,16 +17,16 @@ public class LancamentosModel {
     @Column(name = "lancamentoInvalido", nullable = false)
     private Byte lancamentoInvalido;
 
-    @Column(name = "numeroLancamento", nullable = false)
+    @Column(name = "numeroLancamento", nullable = true)
     private Integer numeroLancamento;
 
     @Column(name = "idLancamento", nullable = false)
-    private Integer idLancamento;
+    private Integer idTipoLancamento;
 
     @Column(name = "dataLancamento", nullable = false)
     private LocalDate dataLancamento;
 
-    @Column(name = "idLancamentoPai", nullable = false)
+    @Column(name = "idLancamentoPai", nullable = true)
     private Integer idLancamentoPai;
 
     @Column(name = "idUnidade", nullable = false)
@@ -36,8 +35,8 @@ public class LancamentosModel {
     @Column(name = "descricao", nullable = false, length = 255)
     private String descricao;
 
-    @Column(name = "idUnidadeOrcamento", nullable = false)
-    private Integer idUnidadeOrcamento;
+    @Column(name = "idUnidadeOrcamentaria", nullable = false)
+    private Integer idUnidadeOrcamentaria;
 
     @Column(name = "idPrograma", nullable = false)
     private Integer idPrograma;
@@ -57,16 +56,16 @@ public class LancamentosModel {
     @Column(name = "idElementoDespesa", nullable = false)
     private Integer idElementoDespesa;
 
-    @Column(name = "idSolicitante", nullable = false)
+    @Column(name = "idSolicitante", nullable = true)
     private Integer idSolicitante;
 
-    @Column(name = "ged", nullable = false, length = 27)
-    private char ged;
+    @Column(name = "ged", nullable = true, length = 27)
+    private String ged;
 
     @Column(name = "contrato", nullable = false, length = 255)
-    private String contrato;
+    private String contratado;
 
-    @Column(name = "idObjetivoEstrategico", nullable = false)
+    @Column(name = "idObjetivoEstrategico", nullable = true)
     private Integer idObjetivoEstrategico;
 
     @Column(name = "valor", nullable = false)
@@ -78,9 +77,9 @@ public class LancamentosModel {
     @Column(name = "dataCadastro", nullable = false)
     private LocalDate dataCadastro;
 
-    @Column(name = "dataAlteracao", nullable = false)
+    @Column(name = "dataAlteracao", nullable = true)
     private LocalDate dataAlteracao;
 
     @Column(name = "anoOrcamento", nullable = false)
-    private Integer anoOrcamento;
+    private Integer  anoOrcamento;
 }
