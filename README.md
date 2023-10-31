@@ -1,3 +1,3 @@
 #Projeto API orcamento
 
-Criação de um API rest, utilizando java + spring boot
+Criação de um API rest, utilizando Java + Spring Boot
