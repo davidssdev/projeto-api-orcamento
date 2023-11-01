@@ -1,8 +1,10 @@
 package br.com.david.orcamento.rest.form;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -71,4 +73,10 @@ public class LancamentoForm {
 
     @NotNull(message = "O Ano do Orcamento não pode ser nulo")
     private Integer anoOrcamento;
+
+    private LocalDate dataCadastro;
+
+    private LocalDate dataAlteracao;
+    //Data do lancamento esta igual a dataCadastro, aguardando regra para modificação
+    private LocalDate dataLancamento;
 }

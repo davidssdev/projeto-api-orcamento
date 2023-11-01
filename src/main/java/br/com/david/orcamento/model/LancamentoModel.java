@@ -1,5 +1,6 @@
 package br.com.david.orcamento.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class LancamentoModel {
     @Column(name = "idLancamento", nullable = false)
     private Integer idTipoLancamento;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "dataLancamento", nullable = false)
     private LocalDate dataLancamento;
 
@@ -74,9 +76,11 @@ public class LancamentoModel {
     @Column(name = "idTipoTransacao", nullable = false)
     private Integer idTipoTransacao;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "dataCadastro", nullable = false)
     private LocalDate dataCadastro;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "dataAlteracao", nullable = true)
     private LocalDate dataAlteracao;
 
