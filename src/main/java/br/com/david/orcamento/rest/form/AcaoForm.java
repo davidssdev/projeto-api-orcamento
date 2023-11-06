@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class AcaoForm {
@@ -22,7 +22,7 @@ public class AcaoForm {
     private String nome;
 
     //Data de cadastro e atualização pré definida na API
-    private LocalDate data_cadastro;
+    private LocalDateTime data_cadastro;
 
-    private LocalDate data_alteracao;
+    private LocalDateTime data_alteracao;
 }

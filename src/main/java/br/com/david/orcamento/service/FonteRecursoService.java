@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -49,7 +50,7 @@ public class FonteRecursoService {
     public FonteRecursoModel updateFonte(FonteRecursoForm fonteRecursoForm, Integer id){
         try{
             Optional<FonteRecursoModel> acaoExist = fonteRecursoRepository.findById(id);
-            var dtAtual = LocalDate.now();
+            var dtAtual = LocalDateTime.now();
 
             if(acaoExist.isPresent()){
                 FonteRecursoModel fonteUpdate = acaoExist.get();
@@ -81,7 +82,7 @@ public class FonteRecursoService {
 
     public FonteRecursoModel convertFonteFormToFontModel(FonteRecursoForm fonteRecursoForm){
         FonteRecursoModel convertFonte = new FonteRecursoModel();
-        var dtAtual = LocalDate.now();
+        var dtAtual = LocalDateTime.now();
 
         convertFonte.setCodigo(fonteRecursoForm.getCodigo());
         convertFonte.setNome(fonteRecursoForm.getNome());

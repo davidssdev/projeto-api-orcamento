@@ -13,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -50,7 +51,7 @@ public class GrupoDespesaService {
     public GrupoDespesaModel updateGrupo(GrupoDespesaForm grupoDespesaForm, Integer id){
         try{
             Optional<GrupoDespesaModel> grupoExist = grupoDespesaRepository.findById(id);
-            var dtAtual = LocalDate.now();
+            var dtAtual = LocalDateTime.now();
 
             if(grupoExist.isPresent()){
                 GrupoDespesaModel grupoUpdate = grupoExist.get();
@@ -82,7 +83,7 @@ public class GrupoDespesaService {
 
     public GrupoDespesaModel convertGrupoFormToGrupoModel(GrupoDespesaForm grupoDespesaForm){
         GrupoDespesaModel convertGrupo = new GrupoDespesaModel();
-        var dtAtual = LocalDate.now();
+        var dtAtual = LocalDateTime.now();
 
         convertGrupo.setCodigo(grupoDespesaForm.getCodigo());
         convertGrupo.setNome(grupoDespesaForm.getNome());

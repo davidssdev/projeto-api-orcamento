@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -47,7 +48,7 @@ public class AcaoService {
     public AcaoModel updateAcao(AcaoForm acaoForm, Integer id){
         try{
             Optional<AcaoModel> acaoExist = acaoRepository.findById(id);
-            var dtAtual = LocalDate.now();
+            var dtAtual = LocalDateTime.now();
 
             if(acaoExist.isPresent()){
                 AcaoModel acaoUpdate = acaoExist.get();
@@ -66,6 +67,7 @@ public class AcaoService {
     }
 
     public void deleteAcao(Integer id){
+
         try{
             if(acaoRepository.existsById(id)){
                 acaoRepository.deleteById(id);
@@ -79,7 +81,7 @@ public class AcaoService {
 
     public AcaoModel convertAcaoFormToAcaoModel(AcaoForm acaoForm){
         AcaoModel convertAcao = new AcaoModel();
-        var dtAtual = LocalDate.now();
+        var dtAtual = LocalDateTime.now();
 
         convertAcao.setCodigo(acaoForm.getCodigo());
         convertAcao.setNome(acaoForm.getNome());

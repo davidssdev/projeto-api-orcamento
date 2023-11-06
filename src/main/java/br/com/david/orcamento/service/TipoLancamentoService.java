@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -49,7 +50,7 @@ public class TipoLancamentoService {
     public TipoLancamentoModel updateTipoLancamento(TipoLancamentoForm tipoLancamentoForm, Integer id){
         try{
             Optional<TipoLancamentoModel> tipoLancamentoExist = tipoLancamentoRepository.findById(id);
-            var dtAtual = LocalDate.now();
+            var dtAtual = LocalDateTime.now();
 
             if(tipoLancamentoExist.isPresent()){
                 TipoLancamentoModel tipoLancamentoUpdate = tipoLancamentoExist.get();
@@ -80,7 +81,7 @@ public class TipoLancamentoService {
 
     public TipoLancamentoModel convertTipoFormToTipoModel(TipoLancamentoForm tipoLancamentoForm){
         TipoLancamentoModel convertTipoLancamento = new TipoLancamentoModel();
-        var dtAtual = LocalDate.now();
+        var dtAtual = LocalDateTime.now();
 
         convertTipoLancamento.setNome(tipoLancamentoForm.getNome());
         convertTipoLancamento.setData_cadastro(dtAtual);

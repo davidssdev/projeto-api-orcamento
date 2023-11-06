@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -49,7 +50,7 @@ public class UnidadeOrcamentariaService {
     public UnidadeOrcamentariaModel updateUndOrcamentaria(UnidadeOrcamentariaForm unidadeOrcamentariaForm, Integer id){
         try{
             Optional<UnidadeOrcamentariaModel> unidadeOrcamentariaExist = unidadeOrcamentoRepository.findById(id);
-            var dtAtual = LocalDate.now();
+            var dtAtual = LocalDateTime.now();
 
             if(unidadeOrcamentariaExist.isPresent()){
                 UnidadeOrcamentariaModel undOrcamentariaUpdate = unidadeOrcamentariaExist.get();
@@ -81,7 +82,7 @@ public class UnidadeOrcamentariaService {
 
     public UnidadeOrcamentariaModel convertUnidOrcamentariaFormToUnidOrcamentariaModel(UnidadeOrcamentariaForm unidadeOrcamentariaForm){
         UnidadeOrcamentariaModel convertUndOrcamentaria = new UnidadeOrcamentariaModel();
-        var dtAtual = LocalDate.now();
+        var dtAtual = LocalDateTime.now();
 
         convertUndOrcamentaria.setCodigo(unidadeOrcamentariaForm.getCodigo());
         convertUndOrcamentaria.setNome(unidadeOrcamentariaForm.getNome());

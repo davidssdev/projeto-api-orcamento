@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -47,7 +48,7 @@ public class ObjetivoEstrategicoService {
     public ObjetivoEstrategicoModel updateObjetivos(ObjetivoEstrategicoForm objetivosEstrategicosForm, Integer id){
         try{
             Optional<ObjetivoEstrategicoModel> objetivosExist = objetivoEstrategicosRepository.findById(id);
-            var dtAtual = LocalDate.now();
+            var dtAtual = LocalDateTime.now();
 
             if(objetivosExist.isPresent()){
                 ObjetivoEstrategicoModel objetivosUpdate = objetivosExist.get();
@@ -78,7 +79,7 @@ public class ObjetivoEstrategicoService {
 
     public ObjetivoEstrategicoModel convertObjetiFormToObjetiModel(ObjetivoEstrategicoForm objetivosEstrategicosForm){
         ObjetivoEstrategicoModel convertObjetivos = new ObjetivoEstrategicoModel();
-        var dtAtual = LocalDate.now();
+        var dtAtual = LocalDateTime.now();
 
         convertObjetivos.setNome(objetivosEstrategicosForm.getNome());
         convertObjetivos.setData_cadastro(dtAtual);

@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -48,7 +49,7 @@ public class SolicitanteService {
     public SolicitanteModel updateSolicitante(SolicitanteForm solicitanteForm, Integer id){
         try{
             Optional<SolicitanteModel> solicitanteExist = solicitanteRepository.findById(id);
-            var dtAtual = LocalDate.now();
+            var dtAtual = LocalDateTime.now();
 
             if(solicitanteExist.isPresent()){
                 SolicitanteModel solicitanteUpdate = solicitanteExist.get();
@@ -79,7 +80,7 @@ public class SolicitanteService {
 
     public SolicitanteModel convertSolicFormToSolicModel(SolicitanteForm solicitanteForm){
         SolicitanteModel convertSolicitante = new SolicitanteModel();
-        var dtAtual = LocalDate.now();
+        var dtAtual = LocalDateTime.now();
 
         convertSolicitante.setNome(solicitanteForm.getNome());
         convertSolicitante.setData_cadastro(dtAtual);

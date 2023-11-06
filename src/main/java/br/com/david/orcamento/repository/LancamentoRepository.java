@@ -15,6 +15,4 @@ public interface LancamentoRepository extends JpaRepository<LancamentoModel, Int
 
     Optional<LancamentoModel> findByDescricao(String descricao);
 
-
-    Optional<LancamentoModel> findByAnoOrcamento(Integer anoOrcamento);
 }

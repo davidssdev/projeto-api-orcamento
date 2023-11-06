@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -47,7 +48,7 @@ public class ProgramaService {
     public ProgramaModel updatePrograma(ProgramaForm programaForm, Integer id){
         try{
             Optional<ProgramaModel> programaExist = programaRepository.findById(id);
-            var dtAtual = LocalDate.now();
+            var dtAtual = LocalDateTime.now();
 
             if(programaExist.isPresent()){
                 ProgramaModel programaUpdate = programaExist.get();
@@ -80,7 +81,7 @@ public class ProgramaService {
 
     public ProgramaModel convertProgFormProgModel(ProgramaForm programaForm){
         ProgramaModel convertPrograma = new ProgramaModel();
-        var dtAtual = LocalDate.now();
+        var dtAtual = LocalDateTime.now();
 
         convertPrograma.setCodigo(programaForm.getCodigo());
         convertPrograma.setNome(programaForm.getNome());

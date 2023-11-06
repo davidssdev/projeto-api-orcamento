@@ -1,6 +1,5 @@
 package br.com.david.orcamento.service;
 
-import br.com.david.orcamento.model.GrupoDespesaModel;
 import br.com.david.orcamento.model.LancamentoModel;
 import br.com.david.orcamento.repository.LancamentoRepository;
 import br.com.david.orcamento.rest.form.LancamentoForm;
@@ -10,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -49,32 +48,32 @@ public class LancamentoService {
     public  LancamentoModel updateLancamento(LancamentoForm lancamentoForm, Integer id){
         try{
             Optional<LancamentoModel> lancamentoExist = lancamentoRepository.findById(id);
-            var dtAtual = LocalDate.now();
+            var dtAtual = LocalDateTime.now();
 
             if( lancamentoExist.isPresent()){
                 LancamentoModel lancamentoUpdate = lancamentoExist.get();
 
-                lancamentoUpdate.setLancamentoInvalido(lancamentoForm.getLancamentoInvalido());
-                lancamentoUpdate.setNumeroLancamento(lancamentoForm.getNumeroLancamento());
-                lancamentoUpdate.setIdTipoLancamento(lancamentoForm.getIdTipoLancamento());
-                lancamentoUpdate.setIdLancamentoPai(lancamentoForm.getIdLancamentoPai());
-                lancamentoUpdate.setIdUnidade(lancamentoForm.getIdUnidade());
+                lancamentoUpdate.setLacamento_invalido(lancamentoForm.getLacamento_invalido());
+                lancamentoUpdate.setNumero_lancamento(lancamentoForm.getNumero_lancamento());
+                lancamentoUpdate.setId_tipo_lancamento(lancamentoForm.getId_tipo_lancamento());
+                lancamentoUpdate.setId_lancamento_pai(lancamentoForm.getId_lancamento_pai());
+                lancamentoUpdate.setId_unidade(lancamentoForm.getId_unidade());
                 lancamentoUpdate.setDescricao(lancamentoForm.getDescricao());
-                lancamentoUpdate.setIdUnidadeOrcamentaria(lancamentoForm.getIdUnidadeOrcamentaria());
-                lancamentoUpdate.setIdPrograma(lancamentoForm.getIdPrograma());
-                lancamentoUpdate.setIdAcao(lancamentoForm.getIdAcao());
-                lancamentoUpdate.setIdFonteRecurso(lancamentoForm.getIdFonteRecurso());
-                lancamentoUpdate.setIdGrupoDespesa(lancamentoForm.getIdGrupoDespesa());
-                lancamentoUpdate.setIdModalidadeAplicacao(lancamentoForm.getIdModalidadeAplicacao());
-                lancamentoUpdate.setIdElementoDespesa(lancamentoForm.getIdElementoDespesa());
-                lancamentoUpdate.setIdSolicitante(lancamentoForm.getIdSolicitante());
+                lancamentoUpdate.setId_unidade_orcamentaria(lancamentoForm.getId_unidade_orcamentaria());
+                lancamentoUpdate.setId_programa(lancamentoForm.getId_programa());
+                lancamentoUpdate.setId_acao(lancamentoForm.getId_acao());
+                lancamentoUpdate.setId_fonte_recurso(lancamentoForm.getId_fonte_recurso());
+                lancamentoUpdate.setId_grupo_despesa(lancamentoForm.getId_grupo_despesa());
+                lancamentoUpdate.setId_modalidade_aplicacao(lancamentoForm.getId_modalidade_aplicacao());
+                lancamentoUpdate.setId_elemento_despesa(lancamentoForm.getId_elemento_despesa());
+                lancamentoUpdate.setId_solicitante(lancamentoForm.getId_solicitante());
                 lancamentoUpdate.setGed(lancamentoForm.getGed());
                 lancamentoUpdate.setContratado(lancamentoForm.getContratado());
-                lancamentoUpdate.setIdObjetivoEstrategico(lancamentoForm.getIdObjetivoEstrategico());
+                lancamentoUpdate.setId_objetivo_estrategico(lancamentoForm.getId_objetivo_estrategico());
                 lancamentoUpdate.setValor(lancamentoForm.getValor());
-                lancamentoUpdate.setIdTipoTransacao(lancamentoForm.getIdTipoTransacao());
+                lancamentoUpdate.setId_tipo_transacao(lancamentoForm.getId_tipo_transacao());
                 lancamentoUpdate.setData_alteracao(dtAtual);
-                lancamentoUpdate.setAnoOrcamento(lancamentoForm.getAnoOrcamento());
+                lancamentoUpdate.setAno_orcamento(lancamentoForm.getAno_orcamento());
 
                 lancamentoRepository.save(lancamentoUpdate);
                 return lancamentoUpdate;
@@ -101,30 +100,30 @@ public class LancamentoService {
 
     public LancamentoModel covertLancFormToLancModel(LancamentoForm lancamentoForm){
         LancamentoModel ConvertLancamento = new LancamentoModel();
-        var dtAtual = LocalDate.now();
+        var dtAtual = LocalDateTime.now();
 
-        ConvertLancamento.setLancamentoInvalido(lancamentoForm.getLancamentoInvalido());
-        ConvertLancamento.setNumeroLancamento(lancamentoForm.getNumeroLancamento());
-        ConvertLancamento.setIdTipoLancamento(lancamentoForm.getIdTipoLancamento());
+        ConvertLancamento.setLacamento_invalido(lancamentoForm.getLacamento_invalido());
+        ConvertLancamento.setNumero_lancamento(lancamentoForm.getNumero_lancamento());
+        ConvertLancamento.setId_tipo_lancamento(lancamentoForm.getId_tipo_lancamento());
         ConvertLancamento.setData_lancamento(dtAtual);
-        ConvertLancamento.setIdLancamentoPai(lancamentoForm.getIdLancamentoPai());
-        ConvertLancamento.setIdUnidade(lancamentoForm.getIdUnidade());
+        ConvertLancamento.setId_lancamento_pai(lancamentoForm.getId_lancamento_pai());
+        ConvertLancamento.setId_unidade(lancamentoForm.getId_unidade());
         ConvertLancamento.setDescricao(lancamentoForm.getDescricao());
-        ConvertLancamento.setIdUnidadeOrcamentaria(lancamentoForm.getIdUnidadeOrcamentaria());
-        ConvertLancamento.setIdPrograma(lancamentoForm.getIdPrograma());
-        ConvertLancamento.setIdAcao(lancamentoForm.getIdAcao());
-        ConvertLancamento.setIdFonteRecurso(lancamentoForm.getIdFonteRecurso());
-        ConvertLancamento.setIdGrupoDespesa(lancamentoForm.getIdGrupoDespesa());
-        ConvertLancamento.setIdModalidadeAplicacao(lancamentoForm.getIdModalidadeAplicacao());
-        ConvertLancamento.setIdElementoDespesa(lancamentoForm.getIdElementoDespesa());
-        ConvertLancamento.setIdSolicitante(lancamentoForm.getIdSolicitante());
+        ConvertLancamento.setId_unidade_orcamentaria(lancamentoForm.getId_unidade_orcamentaria());
+        ConvertLancamento.setId_programa(lancamentoForm.getId_programa());
+        ConvertLancamento.setId_acao(lancamentoForm.getId_acao());
+        ConvertLancamento.setId_fonte_recurso(lancamentoForm.getId_fonte_recurso());
+        ConvertLancamento.setId_grupo_despesa(lancamentoForm.getId_grupo_despesa());
+        ConvertLancamento.setId_modalidade_aplicacao(lancamentoForm.getId_modalidade_aplicacao());
+        ConvertLancamento.setId_elemento_despesa(lancamentoForm.getId_elemento_despesa());
+        ConvertLancamento.setId_solicitante(lancamentoForm.getId_solicitante());
         ConvertLancamento.setGed(lancamentoForm.getGed());
         ConvertLancamento.setContratado(lancamentoForm.getContratado());
-        ConvertLancamento.setIdObjetivoEstrategico(lancamentoForm.getIdObjetivoEstrategico());
+        ConvertLancamento.setId_objetivo_estrategico(lancamentoForm.getId_objetivo_estrategico());
         ConvertLancamento.setValor(lancamentoForm.getValor());
-        ConvertLancamento.setIdTipoTransacao(lancamentoForm.getIdTipoTransacao());
+        ConvertLancamento.setId_tipo_transacao(lancamentoForm.getId_tipo_transacao());
         ConvertLancamento.setData_cadastro(dtAtual);
-        ConvertLancamento.setAnoOrcamento(lancamentoForm.getAnoOrcamento());
+        ConvertLancamento.setAno_orcamento(lancamentoForm.getAno_orcamento());
 
         return ConvertLancamento;
     }

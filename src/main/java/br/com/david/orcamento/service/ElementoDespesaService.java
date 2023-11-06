@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -50,7 +51,7 @@ public class ElementoDespesaService {
     public ElementoDespesaModel updateElemento(ElementoDespesaForm elementoDespesaForm, Integer id){
         try{
             Optional<ElementoDespesaModel> elementoExist = elementoDespesaRepository.findById(id);
-            var dtAtual = LocalDate.now();
+            var dtAtual = LocalDateTime.now();
 
             if (elementoExist.isPresent()){
                 ElementoDespesaModel elementoUpdate = elementoExist.get();
@@ -82,7 +83,7 @@ public class ElementoDespesaService {
 
     public ElementoDespesaModel convertElementoFormToElementoForm(ElementoDespesaForm elementoDespesaForm){
         ElementoDespesaModel elementoModel = new ElementoDespesaModel();
-        var dtAtual = LocalDate.now();
+        var dtAtual = LocalDateTime.now();
 
         elementoModel.setCodigo(elementoDespesaForm.getCodigo());
         elementoModel.setNome(elementoDespesaForm.getNome());
