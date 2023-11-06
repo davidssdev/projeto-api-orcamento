@@ -1,6 +1,7 @@
 package br.com.david.orcamento.rest.controller;
 
 import br.com.david.orcamento.model.ElementoDespesaModel;
+import br.com.david.orcamento.rest.dto.ElementoDespesaDTo;
 import br.com.david.orcamento.rest.form.ElementoDespesaForm;
 import br.com.david.orcamento.service.ElementoDespesaService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
@@ -21,33 +22,33 @@ public class ElementoDespesaController {
     ElementoDespesaService elementoDespesaService;
 
     @GetMapping
-    public ResponseEntity<List<ElementoDespesaModel>> findAll(){
-        List<ElementoDespesaModel> elementoList = elementoDespesaService.findAllElemento();
+    public ResponseEntity<List<ElementoDespesaDTo>> findAll(){
+        List<ElementoDespesaDTo> elementoList = elementoDespesaService.findAllElemento();
         return ResponseEntity.ok().body(elementoList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ElementoDespesaModel> find(@PathVariable("id") Integer id){
-        ElementoDespesaModel elemento = elementoDespesaService.findByIdElemento(id);
+    public ResponseEntity<ElementoDespesaDTo> find(@PathVariable("id") Integer id){
+        ElementoDespesaDTo elemento = elementoDespesaService.findByIdElemento(id);
         return ResponseEntity.ok().body(elemento);
     }
 
     @PostMapping
-    public ResponseEntity<ElementoDespesaModel> insert(@Valid @RequestBody ElementoDespesaForm elementoDespesaForm, BindingResult br){
+    public ResponseEntity<ElementoDespesaDTo> insert(@Valid @RequestBody ElementoDespesaForm elementoDespesaForm, BindingResult br){
         if(br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
-            ElementoDespesaModel novoElemento = elementoDespesaService.insertElemento(elementoDespesaForm);
+            ElementoDespesaDTo novoElemento = elementoDespesaService.insertElemento(elementoDespesaForm);
             return ResponseEntity.ok().body(novoElemento);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ElementoDespesaModel> update(@Valid @RequestBody ElementoDespesaForm elementoDespesaForm, @PathVariable("id") Integer id, BindingResult br){
+    public ResponseEntity<ElementoDespesaDTo> update(@Valid @RequestBody ElementoDespesaForm elementoDespesaForm, @PathVariable("id") Integer id, BindingResult br){
         if(br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
-            ElementoDespesaModel updateElemento = elementoDespesaService.updateElemento(elementoDespesaForm, id);
+            ElementoDespesaDTo updateElemento = elementoDespesaService.updateElemento(elementoDespesaForm, id);
             return ResponseEntity.ok().body(updateElemento);
         }
     }

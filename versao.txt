@@ -1,23 +1,27 @@
+Versão 1.0.70
+
+    - Implementação do ModelMapper nos serviços das models.
+
 Versão 1.0.68
 
-    - Implementação das configurações da conexão sqlserver e alteração de dados das models
+    - Implementação das configurações da conexão sqlserver e alteração de dados das models.
 
-Versão 1.0.65
+Versão 1.0.67
 
-    - Implementação dos serviços e controllers geral.
+    - Implementação dos services das models.
 
-Versão 1.0.45
-
-    - Implementação do service e controller da acao e elemento de despesa.
-
-Versão 1.0.41
-
-    - Implementação dos forms das entidades.
-
-Versão 1.0.28
+Versão 1.0.54
 
     - Implementação da classe swaggerConfig.
     - Adicionado as dependencias do swagger e dos DBs.
+
+Versão 1.0.52
+
+    - Implementação dos DTOs das models.
+
+Versão 1.0.39
+
+    - Implementação dos forms das entidades.
 
 Versão 1.0.26
 

@@ -2,6 +2,7 @@ package br.com.david.orcamento.rest.controller;
 
 
 import br.com.david.orcamento.model.SolicitanteModel;
+import br.com.david.orcamento.rest.dto.SolicitanteDTo;
 import br.com.david.orcamento.rest.form.SolicitanteForm;
 import br.com.david.orcamento.service.SolicitanteService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
@@ -22,35 +23,39 @@ public class SolicitanteController {
     SolicitanteService solicitanteService;
 
     @GetMapping
-    public ResponseEntity<List<SolicitanteModel>> findAll(){
-        List<SolicitanteModel> solicitanteList = solicitanteService.findAllSolicitante();
-        return ResponseEntity.ok().body(solicitanteList);
+    public ResponseEntity<List<SolicitanteDTo>> findAll(){
+        List<SolicitanteDTo> solicitanteListDTo = solicitanteService.findAllSolicitante();
+        return ResponseEntity.ok().body(solicitanteListDTo);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SolicitanteModel> find(@PathVariable("id") Integer id){
-        SolicitanteModel solicitante = solicitanteService.findByIdSolicitante(id);
-        return ResponseEntity.ok().body(solicitante);
+    public ResponseEntity<SolicitanteDTo> find(@PathVariable("id") Integer id){
+        SolicitanteDTo solicitanteDTo = solicitanteService.findByIdSolicitante(id);
+        return ResponseEntity.ok().body(solicitanteDTo);
     }
 
     @PostMapping
-    public ResponseEntity<SolicitanteModel> insert(@Valid @RequestBody SolicitanteForm solicitanteForm, BindingResult br){
+    public ResponseEntity<SolicitanteDTo> insert(@Valid @RequestBody SolicitanteForm solicitanteForm, BindingResult br){
 
-        if(br.hasErrors()){
+        if(br.hasErrors())
+        {
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-        }else {
-            SolicitanteModel novoSolicitante = solicitanteService.insertSolicitante(solicitanteForm);
-            return ResponseEntity.ok().body(novoSolicitante);
+        }else
+        {
+            SolicitanteDTo novoSolicitanteDTo = solicitanteService.insertSolicitante(solicitanteForm);
+            return ResponseEntity.ok().body(novoSolicitanteDTo);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SolicitanteModel> update(@Valid @RequestBody SolicitanteForm solicitanteForm, @PathVariable("id") Integer id, BindingResult br){
-        if(br.hasErrors()){
+    public ResponseEntity<SolicitanteDTo> update(@Valid @RequestBody SolicitanteForm solicitanteForm, @PathVariable("id") Integer id, BindingResult br){
+        if(br.hasErrors())
+        {
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-        }else {
-            SolicitanteModel solicitanteUpdate = solicitanteService.updateSolicitante(solicitanteForm,id);
-            return  ResponseEntity.ok().body(solicitanteUpdate);
+        }else
+        {
+            SolicitanteDTo solicitanteUpdateDTo = solicitanteService.updateSolicitante(solicitanteForm,id);
+            return  ResponseEntity.ok().body(solicitanteUpdateDTo);
         }
     }
 

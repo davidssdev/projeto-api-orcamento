@@ -30,7 +30,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("Sistema Orcamento")
                 .description("Api do Sistema Orcamento")
-                .version("1.0.0")
+                .version("1.0.70")
                 .contact(contact())
                 .build();
     }

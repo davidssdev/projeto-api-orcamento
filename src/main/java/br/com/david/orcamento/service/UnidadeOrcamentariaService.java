@@ -3,15 +3,20 @@ package br.com.david.orcamento.service;
 import br.com.david.orcamento.model.AcaoModel;
 import br.com.david.orcamento.model.UnidadeOrcamentariaModel;
 import br.com.david.orcamento.repository.UnidadeOrcamentoRepository;
+import br.com.david.orcamento.rest.components.DataFormato;
+import br.com.david.orcamento.rest.dto.UnidadeOrcamentariaDTo;
 import br.com.david.orcamento.rest.form.AcaoForm;
 import br.com.david.orcamento.rest.form.UnidadeOrcamentariaForm;
 import br.com.david.orcamento.service.exceptions.DataIntegrityException;
 import br.com.david.orcamento.service.exceptions.ObjectNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -22,71 +27,118 @@ public class UnidadeOrcamentariaService {
     @Autowired
     UnidadeOrcamentoRepository unidadeOrcamentoRepository;
 
-    public UnidadeOrcamentariaModel findByIdUnidadeOrcamentaria(Integer id){
-        try{
-            UnidadeOrcamentariaModel unidadeOrcamentaria = unidadeOrcamentoRepository.findById(id).get();
-            return unidadeOrcamentaria;
-        } catch (NoSuchElementException e){
-            throw new ObjectNotFoundException("Objeto não encontrado!");
+    @Autowired
+    ModelMapper modelMapper;
+
+    public List<UnidadeOrcamentariaDTo> findAllUnidadeOrcamentaria(){
+        List<UnidadeOrcamentariaModel> unidadeOrcamentariaListDto = unidadeOrcamentoRepository.findAll();
+        return convertListUndOrcamentModelToDTo(unidadeOrcamentariaListDto);
+    }
+
+    public UnidadeOrcamentariaDTo findByIdUnidadeOrcamentaria(Integer id){
+        try
+        {
+            UnidadeOrcamentariaModel unidadeOrcamentariaDto = unidadeOrcamentoRepository.findById(id).get();
+            return convertUndOrcamentModelToDTo(unidadeOrcamentariaDto);
+        }catch (NoSuchElementException e)
+        {
+            throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");
         }
     }
 
-    public List<UnidadeOrcamentariaModel> findAllUnidadeOrcamentaria(){
-        List<UnidadeOrcamentariaModel> unidadeOrcamentariaList = unidadeOrcamentoRepository.findAll();
-        return unidadeOrcamentariaList;
-    }
+    public UnidadeOrcamentariaDTo insertUnidadeOrcamentaria(UnidadeOrcamentariaForm unidadeOrcamentariaForm){
+        try
+        {
+            UnidadeOrcamentariaModel novaUnidadeOrcamentaria = convertUndOrcamentFormToModel(unidadeOrcamentariaForm);
 
-    public UnidadeOrcamentariaModel insertUnidadeOrcamentaria(UnidadeOrcamentariaForm unidadeOrcamentariaForm){
-        try{
-            UnidadeOrcamentariaModel novaUnidadeOrcamentaria = convertUnidOrcamentariaFormToUnidOrcamentariaModel(unidadeOrcamentariaForm);
+            DataFormato data = new DataFormato();
+            LocalDateTime dtAtual = LocalDateTime.now();
+            LocalDateTime dataAtualFormatada = data.formatarData(dtAtual);
+
+            novaUnidadeOrcamentaria.setData_cadastro(dataAtualFormatada);
             novaUnidadeOrcamentaria = unidadeOrcamentoRepository.save(novaUnidadeOrcamentaria);
-            return novaUnidadeOrcamentaria;
-        }catch (DataIntegrityViolationException e){
-            throw new DataIntegrityException("Erro ao tentar realizar o cadastro do tipo: "+ UnidadeOrcamentariaModel.class.getName());
+
+            return convertUndOrcamentModelToDTo(novaUnidadeOrcamentaria);
+        }catch (DataIntegrityViolationException e)
+        {
+            throw new DataIntegrityException("Erro ao tentar realizar o cadastro do tipo: " + UnidadeOrcamentariaModel.class.getName());
         }
     }
 
-    public UnidadeOrcamentariaModel updateUndOrcamentaria(UnidadeOrcamentariaForm unidadeOrcamentariaForm, Integer id){
-        try{
+    public UnidadeOrcamentariaDTo updateUndOrcamentaria(UnidadeOrcamentariaForm unidadeOrcamentariaForm, Integer id){
+        try
+        {
             Optional<UnidadeOrcamentariaModel> unidadeOrcamentariaExist = unidadeOrcamentoRepository.findById(id);
-            var dtAtual = LocalDate.now();
+            DataFormato data = new DataFormato();
+            LocalDateTime dtAtual = LocalDateTime.now();
+            LocalDateTime dataAtualFormatada = data.formatarData(dtAtual);
 
-            if(unidadeOrcamentariaExist.isPresent()){
+            if (unidadeOrcamentariaExist.isPresent())
+            {
                 UnidadeOrcamentariaModel undOrcamentariaUpdate = unidadeOrcamentariaExist.get();
+
                 undOrcamentariaUpdate.setCodigo(unidadeOrcamentariaForm.getCodigo());
                 undOrcamentariaUpdate.setNome(unidadeOrcamentariaForm.getNome());
-                undOrcamentariaUpdate.setData_alteracao(dtAtual);
-
+                undOrcamentariaUpdate.setData_alteracao(dataAtualFormatada);
                 unidadeOrcamentoRepository.save(undOrcamentariaUpdate);
-                return undOrcamentariaUpdate;
-            }else {
-                throw new DataIntegrityException("Códido de ID: "+id+" não encontrado!");
+
+                return  convertUndOrcamentModelToDTo(undOrcamentariaUpdate);
+            } else
+            {
+                throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");
             }
-        }catch (DataIntegrityViolationException e){
-            throw  new DataIntegrityException("Campo(s) obrigatório(s) não foi(foram) preenchido(s)");
+        }catch (DataIntegrityViolationException e)
+        {
+            throw  new DataIntegrityException("Possíveis campo(s) obrigatório(s) não foi(foram) preenchido(s)");
         }
     }
 
     public void deleteUndOrcamentaria(Integer id){
-        try{
-            if(unidadeOrcamentoRepository.existsById(id)){
+        try
+        {
+            if (unidadeOrcamentoRepository.existsById(id))
+            {
                 unidadeOrcamentoRepository.deleteById(id);
-            }else {
-                throw new DataIntegrityException("Códido de ID: "+id+" não encontrado!");
+            } else
+            {
+                throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");
             }
-        }catch (DataIntegrityViolationException e){
-            throw new DataIntegrityException("Objeto não encontrado!");
+        }catch (NoSuchElementException e)
+        {
+            throw new ObjectNotFoundException("Objeto não encontrado!");
         }
     }
 
-    public UnidadeOrcamentariaModel convertUnidOrcamentariaFormToUnidOrcamentariaModel(UnidadeOrcamentariaForm unidadeOrcamentariaForm){
-        UnidadeOrcamentariaModel convertUndOrcamentaria = new UnidadeOrcamentariaModel();
-        var dtAtual = LocalDate.now();
+    public UnidadeOrcamentariaModel convertUndOrcamentFormToModel(UnidadeOrcamentariaForm unidadeOrcamentariaForm){
+        UnidadeOrcamentariaModel unidadeOrcamentariaModel = new UnidadeOrcamentariaModel();
+        unidadeOrcamentariaModel = modelMapper.map(unidadeOrcamentariaForm, UnidadeOrcamentariaModel.class);
 
-        convertUndOrcamentaria.setCodigo(unidadeOrcamentariaForm.getCodigo());
-        convertUndOrcamentaria.setNome(unidadeOrcamentariaForm.getNome());
-        convertUndOrcamentaria.setData_cadastro(dtAtual);
+        return unidadeOrcamentariaModel;
+    }
 
-        return convertUndOrcamentaria;
+    public UnidadeOrcamentariaDTo convertUndOrcamentModelToDTo(UnidadeOrcamentariaModel unidadeOrcamentariaModel){
+        UnidadeOrcamentariaDTo unidadeOrcamentariaDto = new UnidadeOrcamentariaDTo();
+
+        unidadeOrcamentariaDto.setUnd_orcamentaria_id(unidadeOrcamentariaModel.getId());
+        unidadeOrcamentariaDto.setUnd_orcamentaria_codigo(unidadeOrcamentariaModel.getCodigo());
+        unidadeOrcamentariaDto.setUnd_orcamentaria_nome(unidadeOrcamentariaModel.getNome());
+        unidadeOrcamentariaDto.setDt_cadastro(unidadeOrcamentariaModel.getData_cadastro());
+        unidadeOrcamentariaDto.setDt_alteracao(unidadeOrcamentariaModel.getData_alteracao());
+
+        return unidadeOrcamentariaDto;
+    }
+
+    public List<UnidadeOrcamentariaDTo> convertListUndOrcamentModelToDTo(List<UnidadeOrcamentariaModel> unidadeOrcamentariaList){
+        List<UnidadeOrcamentariaDTo> unidadeOrcamentariaDtoList = new ArrayList<>();
+
+        for (UnidadeOrcamentariaModel unidadeOrc : unidadeOrcamentariaList)
+        {
+            UnidadeOrcamentariaDTo unidadeOrcDto = new UnidadeOrcamentariaDTo();
+            unidadeOrcDto = convertUndOrcamentModelToDTo(unidadeOrc);
+
+            unidadeOrcamentariaDtoList.add(unidadeOrcDto);
+        }
+
+        return unidadeOrcamentariaDtoList;
     }
 }

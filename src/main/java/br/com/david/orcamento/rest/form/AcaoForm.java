@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class AcaoForm {
+
+    private Integer id;
 
     @NotNull(message = "O código não pode ser nulo!")
     private Integer codigo;
@@ -21,8 +24,8 @@ public class AcaoForm {
     @Size(max = 600)
     private String nome;
 
-    //Data de cadastro e atualização pré definida na API
-    private LocalDate data_cadastro;
+    //Data de cadastro e atualização, pré definidas na API
+    private LocalDateTime data_cadastro;
 
-    private LocalDate data_alteracao;
+    private LocalDateTime data_alteracao;
 }

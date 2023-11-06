@@ -1,6 +1,7 @@
 package br.com.david.orcamento.rest.controller;
 
 import br.com.david.orcamento.model.UnidadeModel;
+import br.com.david.orcamento.rest.dto.UnidadeDTo;
 import br.com.david.orcamento.rest.form.UnidadeForm;
 import br.com.david.orcamento.service.UnidadeService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
@@ -21,35 +22,37 @@ public class UnidadeController {
     UnidadeService unidadeService;
 
     @GetMapping
-    public ResponseEntity<List<UnidadeModel>> findAll(){
-        List<UnidadeModel> unidadeList = unidadeService.findAllUnidade();
-        return ResponseEntity.ok().body(unidadeList);
+    public ResponseEntity<List<UnidadeDTo>> findAll(){
+        List<UnidadeDTo> unidadeListDto = unidadeService.findAllUnidade();
+        return ResponseEntity.ok().body(unidadeListDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UnidadeModel> find(@PathVariable("id") Integer id){
-        UnidadeModel unidade = unidadeService.findByIdUnidade(id);
-        return ResponseEntity.ok().body(unidade);
+    public ResponseEntity<UnidadeDTo> find(@PathVariable("id") Integer id){
+        UnidadeDTo unidadeDto = unidadeService.findByIdUnidade(id);
+        return ResponseEntity.ok().body(unidadeDto);
     }
 
     @PostMapping
-    public ResponseEntity<UnidadeModel> insert(@Valid @RequestBody UnidadeForm unidadeForm, BindingResult br){
+    public ResponseEntity<UnidadeDTo> insert(@Valid @RequestBody UnidadeForm unidadeForm, BindingResult br){
 
-        if(br.hasErrors()){
+        if(br.hasErrors())
+        {
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-        }else {
-            UnidadeModel novaUnidade = unidadeService.insertUnidade(unidadeForm);
-            return ResponseEntity.ok().body(novaUnidade);
+        }else
+        {
+            UnidadeDTo novaUnidadeDto = unidadeService.insertUnidade(unidadeForm);
+            return ResponseEntity.ok().body(novaUnidadeDto);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UnidadeModel> update(@Valid @RequestBody UnidadeForm unidadeForm, @PathVariable("id") Integer id, BindingResult br){
+    public ResponseEntity<UnidadeDTo> update(@Valid @RequestBody UnidadeForm unidadeForm, @PathVariable("id") Integer id, BindingResult br){
         if(br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
-            UnidadeModel unidadeUpdate = unidadeService.updateUnidade(unidadeForm, id);
-            return  ResponseEntity.ok().body(unidadeUpdate);
+            UnidadeDTo unidadeUpdateDto = unidadeService.updateUnidade(unidadeForm, id);
+            return  ResponseEntity.ok().body(unidadeUpdateDto);
         }
     }
 

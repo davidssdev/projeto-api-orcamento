@@ -10,15 +10,9 @@ import java.util.Optional;
 @Repository
 public interface AcaoRepository extends JpaRepository<AcaoModel, Integer> {
 
-    //Seleciona a acao apartir do seu ID
-    Optional<AcaoModel> findById(Integer id);
-
-    //Seleciona todas as acoes em ordem Desc
-    List<AcaoModel> findByOrderByNomeDesc();
-
     //Seleciona todas as acaoes pelo seu Codigo de ifentificacao
     Optional<AcaoModel> findAllByCodigo(Integer codigo);
 
-    //Seleciona a partir de uma string(Operador LIKE)
+    //Seleciona a partir de uma string
     List<AcaoModel> findByNome(String nome);
 }

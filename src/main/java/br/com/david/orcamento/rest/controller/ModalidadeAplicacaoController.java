@@ -1,6 +1,7 @@
 package br.com.david.orcamento.rest.controller;
 
 import br.com.david.orcamento.model.ModalidadeAplicacaoModel;
+import br.com.david.orcamento.rest.dto.ModalidadeAplicacaoDTo;
 import br.com.david.orcamento.rest.form.ModalidadeAplicacaoForm;
 import br.com.david.orcamento.service.ModalidadeAplicacaoService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
@@ -21,34 +22,38 @@ public class ModalidadeAplicacaoController {
     ModalidadeAplicacaoService modalidadeAplicacaoService;
 
     @GetMapping
-    public ResponseEntity<List<ModalidadeAplicacaoModel>> findAll(){
-        List <ModalidadeAplicacaoModel> modalidadeList = modalidadeAplicacaoService.findAllModalidade();
-        return ResponseEntity.ok().body(modalidadeList);
+    public ResponseEntity<List<ModalidadeAplicacaoDTo>> findAll(){
+        List <ModalidadeAplicacaoDTo> modalidadeListDTo = modalidadeAplicacaoService.findAllModalidade();
+        return ResponseEntity.ok().body(modalidadeListDTo);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ModalidadeAplicacaoModel> find(@PathVariable("id") Integer id){
-        ModalidadeAplicacaoModel modalidade = modalidadeAplicacaoService.findByIdModalidade(id);
-        return ResponseEntity.ok().body(modalidade);
+    public ResponseEntity<ModalidadeAplicacaoDTo> find(@PathVariable("id") Integer id){
+        ModalidadeAplicacaoDTo modalidadeDTo = modalidadeAplicacaoService.findByIdModalidade(id);
+        return ResponseEntity.ok().body(modalidadeDTo);
     }
 
     @PostMapping
-    public ResponseEntity<ModalidadeAplicacaoModel> insert(@Valid @RequestBody ModalidadeAplicacaoForm modalidadeAplicacaoForm, BindingResult br){
-        if(br.hasErrors()){
+    public ResponseEntity<ModalidadeAplicacaoDTo> insert(@Valid @RequestBody ModalidadeAplicacaoForm modalidadeAplicacaoForm, BindingResult br){
+        if(br.hasErrors())
+        {
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-        }else {
-            ModalidadeAplicacaoModel novaModalidade = modalidadeAplicacaoService.insertModalidade(modalidadeAplicacaoForm);
+        }else
+        {
+            ModalidadeAplicacaoDTo novaModalidade = modalidadeAplicacaoService.insertModalidade(modalidadeAplicacaoForm);
             return ResponseEntity.ok().body(novaModalidade);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ModalidadeAplicacaoModel> update(@Valid @RequestBody ModalidadeAplicacaoForm modalidadeAplicacaoForm, @PathVariable("id") Integer id, BindingResult br){
-        if (br.hasErrors()){
+    public ResponseEntity<ModalidadeAplicacaoDTo> update(@Valid @RequestBody ModalidadeAplicacaoForm modalidadeAplicacaoForm, @PathVariable("id") Integer id, BindingResult br){
+        if (br.hasErrors())
+        {
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-        }else {
-            ModalidadeAplicacaoModel modalidadeUpdate = modalidadeAplicacaoService.updateModalidade(modalidadeAplicacaoForm, id);
-                return ResponseEntity.ok().body(modalidadeUpdate);
+        }else
+        {
+            ModalidadeAplicacaoDTo modalidadeUpdate = modalidadeAplicacaoService.updateModalidade(modalidadeAplicacaoForm, id);
+            return ResponseEntity.ok().body(modalidadeUpdate);
         }
     }
 

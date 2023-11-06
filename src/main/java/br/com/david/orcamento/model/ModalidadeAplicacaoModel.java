@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -22,12 +22,12 @@ public class ModalidadeAplicacaoModel {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "data_cadastro", nullable = false)
-    private LocalDate data_cadastro;
+    private LocalDateTime data_cadastro;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "data_alteracao", nullable = true)
-    private LocalDate data_alteracao;
+    private LocalDateTime data_alteracao;
 
 }

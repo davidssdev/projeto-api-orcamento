@@ -1,6 +1,7 @@
 package br.com.david.orcamento.rest.controller;
 
 import br.com.david.orcamento.model.ProgramaModel;
+import br.com.david.orcamento.rest.dto.ProgramaDTo;
 import br.com.david.orcamento.rest.form.ProgramaForm;
 import br.com.david.orcamento.service.ProgramaService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
@@ -21,34 +22,37 @@ public class ProgramaController {
     ProgramaService programaService;
 
     @GetMapping
-    public ResponseEntity<List<ProgramaModel>> findAll(){
-        List<ProgramaModel> programaList = programaService.findAllPrograma();
-        return ResponseEntity.ok().body(programaList);
+    public ResponseEntity<List<ProgramaDTo>> findAll(){
+        List<ProgramaDTo> programaListDTo = programaService.findAllPrograma();
+        return ResponseEntity.ok().body(programaListDTo);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProgramaModel> find(@PathVariable("id") Integer id){
-        ProgramaModel programa = programaService.findByIdPrograma(id);
-        return ResponseEntity.ok().body(programa);
+    public ResponseEntity<ProgramaDTo> find(@PathVariable("id") Integer id){
+        ProgramaDTo programaDTo = programaService.findByIdPrograma(id);
+        return ResponseEntity.ok().body(programaDTo);
     }
 
     @PostMapping
-    public ResponseEntity<ProgramaModel> insert(@Valid @RequestBody ProgramaForm programaForm, BindingResult br){
-
-        if(br.hasErrors()){
+    public ResponseEntity<ProgramaDTo> insert(@Valid @RequestBody ProgramaForm programaForm, BindingResult br){
+        if(br.hasErrors())
+        {
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-        }else {
-            ProgramaModel novoPrograma = programaService.insertPrograma(programaForm);
-            return ResponseEntity.ok().body(novoPrograma);
+        }else
+        {
+            ProgramaDTo novoProgramaDTo = programaService.insertPrograma(programaForm);
+            return ResponseEntity.ok().body(novoProgramaDTo);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProgramaModel> update(@Valid @RequestBody ProgramaForm programaForm, @PathVariable("id") Integer id, BindingResult br){
-        if(br.hasErrors()){
+    public ResponseEntity<ProgramaDTo> update(@Valid @RequestBody ProgramaForm programaForm, @PathVariable("id") Integer id, BindingResult br){
+        if(br.hasErrors())
+        {
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-        }else {
-            ProgramaModel programaUpdate = programaService.updatePrograma(programaForm,id);
+        }else
+        {
+            ProgramaDTo programaUpdate = programaService.updatePrograma(programaForm,id);
             return  ResponseEntity.ok().body(programaUpdate);
         }
     }

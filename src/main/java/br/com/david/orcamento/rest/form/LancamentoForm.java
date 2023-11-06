@@ -1,32 +1,30 @@
 package br.com.david.orcamento.rest.form;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class LancamentoForm {
 
-    @NotNull(message = "O campo Lancamento Inválido não pode ser nulo!")
-    private Byte lancamentoInvalido;
+    private Integer id;
 
-    private Integer numeroLancamento;
+    @NotNull(message = "O campo Lancamento Inválido não pode ser nulo!")
+    private Integer lacamento_invalido;
+
+    private Integer numero_lancamento;
 
     @NotNull(message = "O campo Tipo Lancamento não pode ser nulo!")
-    private Integer idTipoLancamento;
+    private Integer id_tipo_lancamento;
 
-    private Integer idLancamentoPai;
+    private Integer id_lancamento_pai;
 
     @NotNull(message = "O campo Unidade não pode ser nulo!")
-    private Integer idUnidade;
+    private Integer id_unidade;
 
     @NotEmpty
     @NotBlank(message = "A Descrição não pode ser vazia!")
@@ -34,28 +32,28 @@ public class LancamentoForm {
     private String descricao;
 
     @NotNull(message = "O campo Unidade Orcamentaria não pode ser vazio!")
-    private Integer idUnidadeOrcamentaria;
-
-    @NotNull(message = "O Programa não pode ser nulo")
-    private Integer idPrograma;
+    private Integer id_unidade_orcamentaria;
 
     @NotNull(message = "O campo Ação não pode ser vazio!")
-    private Integer idAcao;
+    private Integer id_acao;
+
+    @NotNull(message = "O Programa não pode ser nulo")
+    private Integer id_programa;
 
     @NotNull(message = "O campo Fonte de recurso não pode ser vazio!")
-    private Integer idFonteRecurso;
+    private Integer id_fonte_recurso;
 
     @NotNull(message = "O campo Grupo Despesa não pode ser vazio!")
-    private Integer idGrupoDespesa;
+    private Integer id_grupo_despesa;
 
     @NotNull(message = "O campo Modalidade Aplicação não pode ser vazio!")
-    private Integer idModalidadeAplicacao;
+    private Integer id_modalidade_aplicacao;
 
     @NotNull(message = "O campo Elemento Despesa não pode ser vazio!")
-    private Integer idElementoDespesa;
+    private Integer id_elemento_despesa;
 
     @NotNull(message = "O campo Solicitante não pode ser vazio!")
-    private Integer idSolicitante;
+    private Integer id_solicitante;
 
     @Size(max = 27)// Verificar se a validação vai dar erro;
     private String ged;
@@ -63,20 +61,20 @@ public class LancamentoForm {
     @Size(max = 600)
     private String contratado;
 
-    private Integer idObjetivoEstrategico;
+    private Integer id_objetivo_estrategico;
 
     @NotNull
     private Double valor;
 
     @NotNull(message = "O Tipo de Transação não pode ser vazio!")
-    private Integer idTipoTransacao;
+    private Integer id_tipo_transacao;
 
     @NotNull(message = "O Ano do Orcamento não pode ser nulo")
-    private Integer anoOrcamento;
+    private Integer ano_orcamento;
 
-    private LocalDate data_cadastro;
+    private LocalDateTime data_cadastro;
 
-    private LocalDate data_alteracao;
+    private LocalDateTime data_alteracao;
     //Data do lancamento esta igual a dataCadastro, aguardando regra para modificação
-    private LocalDate data_lancamento;
+    private LocalDateTime data_lancamento;
 }

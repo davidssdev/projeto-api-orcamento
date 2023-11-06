@@ -3,15 +3,21 @@ package br.com.david.orcamento.service;
 import br.com.david.orcamento.model.TipoLancamentoModel;
 import br.com.david.orcamento.model.TipoTransacaoModel;
 import br.com.david.orcamento.repository.TipoTransacaoRepository;
+import br.com.david.orcamento.rest.components.DataFormato;
+import br.com.david.orcamento.rest.dto.TipoLancamentoDTo;
+import br.com.david.orcamento.rest.dto.TipoTransacaoDTo;
 import br.com.david.orcamento.rest.form.TipoLancamentoForm;
 import br.com.david.orcamento.rest.form.TipoTransacaoForm;
 import br.com.david.orcamento.service.exceptions.DataIntegrityException;
 import br.com.david.orcamento.service.exceptions.ObjectNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -22,69 +28,118 @@ public class TipoTransacaoService {
     @Autowired
     TipoTransacaoRepository tipoTransacaoRepository;
 
-    public TipoTransacaoModel findByIdTipoTransacao(Integer id){
-        try{
-            TipoTransacaoModel tipoTransacao = tipoTransacaoRepository.findById(id).get();
-            return tipoTransacao;
-        } catch (NoSuchElementException e){
-            throw new ObjectNotFoundException("Objeto não encontrado!");
+    @Autowired
+    ModelMapper modelMapper;
+
+
+    public List<TipoTransacaoDTo> findAllTipoTransacao(){
+        List<TipoTransacaoModel> tipoTransacaoListDto = tipoTransacaoRepository.findAll();
+        return convertListTipoTranscModelToDTo(tipoTransacaoListDto);
+    }
+
+    public TipoTransacaoDTo findByIdTipoTransacao(Integer id){
+        try
+        {
+            TipoTransacaoModel tipoTransacaoDto = tipoTransacaoRepository.findById(id).get();
+            return convertTipoTransacModelToDTo(tipoTransacaoDto);
+        }catch (NoSuchElementException e)
+        {
+            throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");
         }
     }
 
-    public List<TipoTransacaoModel> findAllTipoTransacao(){
-        List<TipoTransacaoModel> tipoTransacaoList = tipoTransacaoRepository.findAll();
-        return tipoTransacaoList;
-    }
+    public TipoTransacaoDTo insertTipoTransacao(TipoTransacaoForm tipoTransacaoForm) {
+        try
+        {
+            TipoTransacaoModel novoTipoTransacao = convertTipoTransacFormToModel(tipoTransacaoForm);
 
-    public TipoTransacaoModel insertTipoTransacao(TipoTransacaoForm tipoTransacaoForm) {
-        try{
-            TipoTransacaoModel novoTipoTransacao= convertTipoTransFormToTipoTransModel(tipoTransacaoForm);
+            DataFormato data = new DataFormato();
+            LocalDateTime dtAtual = LocalDateTime.now();
+            LocalDateTime dataAtualFormatada = data.formatarData(dtAtual);
+
+            novoTipoTransacao.setData_cadastro(dataAtualFormatada);
             novoTipoTransacao = tipoTransacaoRepository.save(novoTipoTransacao);
-            return novoTipoTransacao;
-        }catch (DataIntegrityViolationException e){
+
+            return convertTipoTransacModelToDTo(novoTipoTransacao);
+        }catch (DataIntegrityViolationException e)
+        {
             throw new DataIntegrityException("Erro ao tentar realizar o cadastro do tipo: "+ TipoTransacaoModel.class.getName());
         }
     }
 
-    public TipoTransacaoModel updateTipoTransacao(TipoTransacaoForm tipoTransacaoForm, Integer id){
-        try{
+    public TipoTransacaoDTo updateTipoTransacao(TipoTransacaoForm tipoTransacaoForm, Integer id){
+        try
+        {
             Optional<TipoTransacaoModel> tipoTransacaoExist = tipoTransacaoRepository.findById(id);
-            var dtAtual = LocalDate.now();
 
-            if(tipoTransacaoExist.isPresent()){
+            DataFormato data = new DataFormato();
+            LocalDateTime dtAtual = LocalDateTime.now();
+            LocalDateTime dataAtualFormatada = data.formatarData(dtAtual);
+
+            if (tipoTransacaoExist.isPresent())
+            {
                 TipoTransacaoModel tipoTransacaoUpdate = tipoTransacaoExist.get();
-                tipoTransacaoUpdate.setNome(tipoTransacaoForm.getNome());
-                tipoTransacaoUpdate.setData_alteracao(dtAtual);
 
+                tipoTransacaoUpdate.setNome(tipoTransacaoForm.getNome());
+                tipoTransacaoUpdate.setData_alteracao(dataAtualFormatada);
                 tipoTransacaoRepository.save(tipoTransacaoUpdate);
-                return tipoTransacaoUpdate;
-            }else {
-                throw new DataIntegrityException("Códido de ID: "+id+" não encontrado!");
+
+                return convertTipoTransacModelToDTo(tipoTransacaoUpdate);
+            } else
+            {
+                throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");
             }
-        }catch (DataIntegrityViolationException e){
-            throw  new DataIntegrityException("Campo(s) obrigatório(s) não foi(foram) preenchido(s)");
+        }catch (DataIntegrityViolationException e)
+        {
+            throw  new DataIntegrityException("Possíveis campo(s) obrigatório(s) não foi(foram) preenchido(s)");
         }
     }
 
     public void deleteTipoTransacao(Integer id){
-        try{
-            if(tipoTransacaoRepository.existsById(id)){
+        try
+        {
+            if (tipoTransacaoRepository.existsById(id))
+            {
                 tipoTransacaoRepository.deleteById(id);
-            }else {
-                throw new DataIntegrityException("Códido de ID: "+id+" não encontrado!");
+            } else
+            {
+                throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");
             }
-        }catch (DataIntegrityViolationException e){
-            throw new DataIntegrityException("Objeto não encontrado!");
+        }catch (NoSuchElementException e)
+        {
+            throw new ObjectNotFoundException("Objeto não encontrado!");
         }
     }
 
-    public TipoTransacaoModel convertTipoTransFormToTipoTransModel(TipoTransacaoForm tipoTransacaoForm){
-        TipoTransacaoModel convertTipoTransacao= new TipoTransacaoModel();
-        var dtAtual = LocalDate.now();
+    public TipoTransacaoModel convertTipoTransacFormToModel(TipoTransacaoForm tipoTransacaoForm){
+        TipoTransacaoModel tipoTransacaoModel = new TipoTransacaoModel();
+        tipoTransacaoModel = modelMapper.map(tipoTransacaoForm, TipoTransacaoModel.class);
 
-        convertTipoTransacao.setNome(tipoTransacaoForm.getNome());
-        convertTipoTransacao.setData_cadastro(dtAtual);
+        return tipoTransacaoModel;
+    }
 
-        return convertTipoTransacao;
+    public TipoTransacaoDTo convertTipoTransacModelToDTo(TipoTransacaoModel tipoTransacaoModel){
+        TipoTransacaoDTo tipoTransacaoDto = new TipoTransacaoDTo();
+
+        tipoTransacaoDto.setTipo_transac_id(tipoTransacaoModel.getId());
+        tipoTransacaoDto.setTipo_transac_nome(tipoTransacaoModel.getNome());
+        tipoTransacaoDto.setDt_cadastro(tipoTransacaoModel.getData_cadastro());
+        tipoTransacaoDto.setDt_alteracao(tipoTransacaoModel.getData_alteracao());
+
+        return tipoTransacaoDto;
+    }
+
+    public List<TipoTransacaoDTo> convertListTipoTranscModelToDTo(List<TipoTransacaoModel> tipoTransacaoList){
+        List<TipoTransacaoDTo> tipoTransacaoDtoList = new ArrayList<>();
+
+        for (TipoTransacaoModel tipoTransacao : tipoTransacaoList)
+        {
+            TipoTransacaoDTo tipoTransacaoDto = new TipoTransacaoDTo();
+            tipoTransacaoDto = convertTipoTransacModelToDTo(tipoTransacao);
+
+            tipoTransacaoDtoList.add(tipoTransacaoDto);
+        }
+
+        return tipoTransacaoDtoList;
     }
 }

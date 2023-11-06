@@ -1,6 +1,7 @@
 package br.com.david.orcamento.rest.controller;
 
 import br.com.david.orcamento.model.LancamentoModel;
+import br.com.david.orcamento.rest.dto.LancamentoDTo;
 import br.com.david.orcamento.rest.form.LancamentoForm;
 import br.com.david.orcamento.service.LancamentoService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -20,34 +22,36 @@ public class LancamentoController {
     LancamentoService lancamentoService;
 
     @GetMapping
-    public ResponseEntity<List<LancamentoModel>> findAll(){
-        List<LancamentoModel> lancamentoList = lancamentoService.findAllLancamento();
-        return ResponseEntity.ok().body(lancamentoList);
+    public ResponseEntity<List<LancamentoDTo>> findAll(){
+        List<LancamentoDTo> lancamentoDToListList = lancamentoService.findAllLancamento();
+
+        return ResponseEntity.ok().body(lancamentoDToListList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LancamentoModel> find(@PathVariable("id") Integer id){
-        LancamentoModel lancamento = lancamentoService.findByIdLancamento(id);
-        return ResponseEntity.ok().body(lancamento);
+    public ResponseEntity<LancamentoDTo> find(@PathVariable("id") Integer id){
+        LancamentoDTo lancamentoDTo = lancamentoService.findByIdLancamento(id);
+
+        return ResponseEntity.ok().body(lancamentoDTo);
     }
 
     @PostMapping
-    public ResponseEntity<LancamentoModel> insert(@RequestBody LancamentoForm lancamentoForm, BindingResult br){
+    public ResponseEntity<LancamentoDTo> insert(@Valid @RequestBody LancamentoForm lancamentoForm, BindingResult br){
         if (br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
-            LancamentoModel novoLancamento = lancamentoService.insertLancamento(lancamentoForm);
-            return ResponseEntity.ok().body(novoLancamento);
+            LancamentoDTo novoLancamentoDTo = lancamentoService.insertLancamento(lancamentoForm);
+            return ResponseEntity.ok().body(novoLancamentoDTo);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LancamentoModel> update(@RequestBody LancamentoForm lancamentoForm, @PathVariable("id") Integer id, BindingResult br){
+    public ResponseEntity<LancamentoDTo> update(@Valid @RequestBody LancamentoForm lancamentoForm, @PathVariable("id") Integer id, BindingResult br){
         if (br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
-            LancamentoModel lancamentoUpdate = lancamentoService.updateLancamento(lancamentoForm, id);
-            return ResponseEntity.ok().body(lancamentoUpdate);
+            LancamentoDTo lancamentoUpdateDTo = lancamentoService.updateLancamento(lancamentoForm, id);
+            return ResponseEntity.ok().body(lancamentoUpdateDTo);
         }
     }
 

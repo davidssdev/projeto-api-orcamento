@@ -3,15 +3,20 @@ package br.com.david.orcamento.service;
 import br.com.david.orcamento.model.SolicitanteModel;
 import br.com.david.orcamento.model.TipoLancamentoModel;
 import br.com.david.orcamento.repository.TipoLancamentoRepository;
+import br.com.david.orcamento.rest.components.DataFormato;
+import br.com.david.orcamento.rest.dto.TipoLancamentoDTo;
 import br.com.david.orcamento.rest.form.SolicitanteForm;
 import br.com.david.orcamento.rest.form.TipoLancamentoForm;
 import br.com.david.orcamento.service.exceptions.DataIntegrityException;
 import br.com.david.orcamento.service.exceptions.ObjectNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -22,69 +27,115 @@ public class TipoLancamentoService {
     @Autowired
     TipoLancamentoRepository tipoLancamentoRepository;
 
-    public TipoLancamentoModel findByIdTipoLancamento(Integer id){
-        try{
-            TipoLancamentoModel tipoLancamento = tipoLancamentoRepository.findById(id).get();
-            return tipoLancamento;
-        } catch (NoSuchElementException e){
-            throw new ObjectNotFoundException("Objeto não encontrado!");
+    @Autowired
+    ModelMapper modelMapper;
+
+    public List<TipoLancamentoDTo> findAllTipoLancamento(){
+        List<TipoLancamentoModel> tipoLancamentoListDto = tipoLancamentoRepository.findAll();
+        return convertListTipoLancModelToDTo(tipoLancamentoListDto);
+    }
+
+    public TipoLancamentoDTo findByIdTipoLancamento(Integer id){
+        try
+        {
+            TipoLancamentoModel tipoLancamentoDto = tipoLancamentoRepository.findById(id).get();
+            return convertTipoLancModelToDTo(tipoLancamentoDto);
+        }catch (NoSuchElementException e)
+        {
+            throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");
         }
     }
 
-    public List<TipoLancamentoModel> findAllTipoLancamento(){
-        List<TipoLancamentoModel> tipoLancamentoList = tipoLancamentoRepository.findAll();
-        return tipoLancamentoList;
-    }
+    public TipoLancamentoDTo insertTipoLancamento(TipoLancamentoForm tipoLancamentoForm) {
+        try
+        {
+            TipoLancamentoModel novoTipoLancamento = convertTipoLancFormlToModel(tipoLancamentoForm);
+            DataFormato data = new DataFormato();
+            LocalDateTime dtAtual = LocalDateTime.now();
+            LocalDateTime dataAtualFormatada = data.formatarData(dtAtual);
 
-    public TipoLancamentoModel insertTipoLancamento(TipoLancamentoForm tipoLancamentoForm) {
-        try{
-            TipoLancamentoModel novoTipoLancamento = convertTipoFormToTipoModel(tipoLancamentoForm);
+            novoTipoLancamento.setData_cadastro(dataAtualFormatada);
             novoTipoLancamento = tipoLancamentoRepository.save(novoTipoLancamento);
-            return novoTipoLancamento;
-        }catch (DataIntegrityViolationException e){
-            throw new DataIntegrityException("Erro ao tentar realizar o cadastro do tipo: "+ TipoLancamentoModel.class.getName());
+
+            return convertTipoLancModelToDTo(novoTipoLancamento);
+        }catch (DataIntegrityViolationException e)
+        {
+            throw new DataIntegrityException("Erro ao tentar realizar o cadastro do tipo: " + TipoLancamentoModel.class.getName());
         }
     }
 
-    public TipoLancamentoModel updateTipoLancamento(TipoLancamentoForm tipoLancamentoForm, Integer id){
-        try{
+    public TipoLancamentoDTo updateTipoLancamento(TipoLancamentoForm tipoLancamentoForm, Integer id){
+        try
+        {
             Optional<TipoLancamentoModel> tipoLancamentoExist = tipoLancamentoRepository.findById(id);
-            var dtAtual = LocalDate.now();
 
-            if(tipoLancamentoExist.isPresent()){
+            DataFormato data = new DataFormato();
+            LocalDateTime dtAtual = LocalDateTime.now();
+            LocalDateTime dataAtualFormatada = data.formatarData(dtAtual);
+
+            if (tipoLancamentoExist.isPresent())
+            {
                 TipoLancamentoModel tipoLancamentoUpdate = tipoLancamentoExist.get();
                 tipoLancamentoUpdate.setNome(tipoLancamentoForm.getNome());
-                tipoLancamentoUpdate.setData_alteracao(dtAtual);
+                tipoLancamentoUpdate.setData_alteracao(dataAtualFormatada);
 
                 tipoLancamentoRepository.save(tipoLancamentoUpdate);
-                return tipoLancamentoUpdate;
-            }else {
-                throw new DataIntegrityException("Códido de ID: "+id+" não encontrado!");
+                return convertTipoLancModelToDTo(tipoLancamentoUpdate);
+            } else
+            {
+                throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");
             }
-        }catch (DataIntegrityViolationException e){
-            throw  new DataIntegrityException("Campo(s) obrigatório(s) não foi(foram) preenchido(s)");
+        }catch (DataIntegrityViolationException e)
+        {
+            throw  new DataIntegrityException("Possíveis campo(s) obrigatório(s) não foi(foram) preenchido(s)");
         }
     }
 
     public void deleteTipoLancamento(Integer id){
-        try{
-            if(tipoLancamentoRepository.existsById(id)){
+        try
+        {
+            if (tipoLancamentoRepository.existsById(id))
+            {
                 tipoLancamentoRepository.deleteById(id);
-            }else {
-                throw new DataIntegrityException("Códido de ID: "+id+" não encontrado!");
+            } else
+            {
+                throw new ObjectNotFoundException("Códido de ID: " + id +" não encontrado!");
             }
-        }catch (DataIntegrityViolationException e){
+        }catch (NoSuchElementException e)
+        {
             throw new DataIntegrityException("Objeto não encontrado!");
         }
     }
 
-    public TipoLancamentoModel convertTipoFormToTipoModel(TipoLancamentoForm tipoLancamentoForm){
-        TipoLancamentoModel convertTipoLancamento = new TipoLancamentoModel();
-        var dtAtual = LocalDate.now();
+    public TipoLancamentoModel convertTipoLancFormlToModel(TipoLancamentoForm tipoLancamentoForm){
+        TipoLancamentoModel tipoLancamentoModel = new TipoLancamentoModel();
+        tipoLancamentoModel = modelMapper.map(tipoLancamentoForm, TipoLancamentoModel.class);
 
-        convertTipoLancamento.setNome(tipoLancamentoForm.getNome());
-        convertTipoLancamento.setData_cadastro(dtAtual);
+        return tipoLancamentoModel;
+    }
 
-        return convertTipoLancamento;
+    public TipoLancamentoDTo convertTipoLancModelToDTo(TipoLancamentoModel lancamentoModel){
+        TipoLancamentoDTo tipoLancamentoDto = new TipoLancamentoDTo();
+
+        tipoLancamentoDto.setTipo_lanc_id(lancamentoModel.getId());
+        tipoLancamentoDto.setTipo_lanc_nome(lancamentoModel.getNome());
+        tipoLancamentoDto.setDt_cadastro(lancamentoModel.getData_cadastro());
+        tipoLancamentoDto.setDt_alteracao(lancamentoModel.getData_alteracao());
+
+        return tipoLancamentoDto;
+    }
+
+    public List<TipoLancamentoDTo> convertListTipoLancModelToDTo(List<TipoLancamentoModel> tipoLancamentoList){
+        List<TipoLancamentoDTo> tipoLancamentoDtoList = new ArrayList<>();
+
+        for (TipoLancamentoModel tipolancamento : tipoLancamentoList )
+        {
+            TipoLancamentoDTo tipolancamentoDto = new TipoLancamentoDTo();
+            tipolancamentoDto = convertTipoLancModelToDTo(tipolancamento);
+
+            tipoLancamentoDtoList.add(tipolancamentoDto);
+        }
+
+        return tipoLancamentoDtoList;
     }
 }

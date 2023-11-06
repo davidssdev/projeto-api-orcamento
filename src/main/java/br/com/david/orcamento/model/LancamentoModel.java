@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -15,75 +15,75 @@ public class LancamentoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "lancamentoInvalido", nullable = false)
-    private Byte lancamentoInvalido;
+    @Column(name = "lacamento_invalido", nullable = false)
+    private Integer lacamento_invalido;
 
-    @Column(name = "numeroLancamento", nullable = true)
-    private Integer numeroLancamento;
+    @Column(name = "numero_lancamento", nullable = true)
+    private Integer numero_lancamento;
 
-    @Column(name = "idLancamento", nullable = false)
-    private Integer idTipoLancamento;
+    @Column(name = "id_tipo_lancamento", nullable = false)
+    private Integer id_tipo_lancamento;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "data_lancamento", nullable = false)
-    private LocalDate data_lancamento;
+    private LocalDateTime data_lancamento;
 
-    @Column(name = "idLancamentoPai", nullable = true)
-    private Integer idLancamentoPai;
+    @Column(name = "id_lancamento_pai", nullable = true)
+    private Integer id_lancamento_pai;
 
-    @Column(name = "idUnidade", nullable = false)
-    private Integer idUnidade;
+    @Column(name = "id_unidade", nullable = false)
+    private Integer id_unidade;
 
     @Column(name = "descricao", nullable = false, length = 255)
     private String descricao;
 
-    @Column(name = "idUnidadeOrcamentaria", nullable = false)
-    private Integer idUnidadeOrcamentaria;
+    @Column(name = "id_unidade_orcamentaria", nullable = false)
+    private Integer id_unidade_orcamentaria;
 
-    @Column(name = "idPrograma", nullable = false)
-    private Integer idPrograma;
+    @Column(name = "id_programa", nullable = false)
+    private Integer id_programa;
 
-    @Column(name = "idAcao", nullable = false)
-    private Integer idAcao;
+    @Column(name = "id_acao", nullable = false)
+    private Integer id_acao;
 
-    @Column(name = "idFonteRecurso", nullable = false)
-    private Integer idFonteRecurso;
+    @Column(name = "id_fonte_recurso", nullable = false)
+    private Integer id_fonte_recurso;
 
-    @Column(name = "idGrupoDespesa", nullable = false)
-    private Integer idGrupoDespesa;
+    @Column(name = "id_grupo_despesa", nullable = false)
+    private Integer id_grupo_despesa;
 
-    @Column(name = "idModalidadeAplicacao", nullable = false)
-    private Integer idModalidadeAplicacao;
+    @Column(name = "id_modalidade_aplicacao", nullable = false)
+    private Integer id_modalidade_aplicacao;
 
-    @Column(name = "idElementoDespesa", nullable = false)
-    private Integer idElementoDespesa;
+    @Column(name = "id_elemento_despesa", nullable = false)
+    private Integer id_elemento_despesa;
 
-    @Column(name = "idSolicitante", nullable = true)
-    private Integer idSolicitante;
+    @Column(name = "id_solicitante", nullable = true)
+    private Integer id_solicitante;
 
     @Column(name = "ged", nullable = true, length = 27)
     private String ged;
 
-    @Column(name = "contrato", nullable = false, length = 255)
+    @Column(name = "contratado", nullable = false, length = 255)
     private String contratado;
 
-    @Column(name = "idObjetivoEstrategico", nullable = true)
-    private Integer idObjetivoEstrategico;
+    @Column(name = "id_objetivo_estrategico", nullable = true)
+    private Integer id_objetivo_estrategico;
 
     @Column(name = "valor", nullable = false)
     private Double valor;
 
-    @Column(name = "idTipoTransacao", nullable = false)
-    private Integer idTipoTransacao;
+    @Column(name = "id_tipo_transacao", nullable = false)
+    private Integer id_tipo_transacao;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "data_cadastro", nullable = false)
-    private LocalDate data_cadastro;
+    private LocalDateTime data_cadastro;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "data_alteracao", nullable = true)
-    private LocalDate data_alteracao;
+    private LocalDateTime data_alteracao;
 
-    @Column(name = "anoOrcamento", nullable = false)
-    private Integer  anoOrcamento;
+    @Column(name = "ano_orcamento", nullable = false)
+    private Integer ano_orcamento;
 }

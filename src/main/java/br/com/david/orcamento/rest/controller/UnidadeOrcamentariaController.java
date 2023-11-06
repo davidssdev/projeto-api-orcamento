@@ -1,6 +1,7 @@
 package br.com.david.orcamento.rest.controller;
 
 import br.com.david.orcamento.model.UnidadeOrcamentariaModel;
+import br.com.david.orcamento.rest.dto.UnidadeOrcamentariaDTo;
 import br.com.david.orcamento.rest.form.UnidadeOrcamentariaForm;
 import br.com.david.orcamento.service.UnidadeOrcamentariaService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
@@ -21,35 +22,39 @@ public class UnidadeOrcamentariaController {
     UnidadeOrcamentariaService unidadeOrcamentariaService;
 
     @GetMapping
-    public ResponseEntity<List<UnidadeOrcamentariaModel>> findAll(){
-        List<UnidadeOrcamentariaModel> unidadeOrcamentariaList = unidadeOrcamentariaService.findAllUnidadeOrcamentaria();
-        return ResponseEntity.ok().body(unidadeOrcamentariaList);
+    public ResponseEntity<List<UnidadeOrcamentariaDTo>> findAll(){
+        List<UnidadeOrcamentariaDTo> unidadeOrcamentariaListDTo = unidadeOrcamentariaService.findAllUnidadeOrcamentaria();
+        return ResponseEntity.ok().body(unidadeOrcamentariaListDTo);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UnidadeOrcamentariaModel> find(@PathVariable("id") Integer id){
-        UnidadeOrcamentariaModel unidadeOrcamentaria = unidadeOrcamentariaService.findByIdUnidadeOrcamentaria(id);
-        return ResponseEntity.ok().body(unidadeOrcamentaria);
+    public ResponseEntity<UnidadeOrcamentariaDTo> find(@PathVariable("id") Integer id){
+        UnidadeOrcamentariaDTo unidadeOrcamentariaDTo = unidadeOrcamentariaService.findByIdUnidadeOrcamentaria(id);
+        return ResponseEntity.ok().body(unidadeOrcamentariaDTo);
     }
 
     @PostMapping
-    public ResponseEntity<UnidadeOrcamentariaModel> insert(@Valid @RequestBody UnidadeOrcamentariaForm unidadeOrcamentariaForm, BindingResult br){
+    public ResponseEntity<UnidadeOrcamentariaDTo> insert(@Valid @RequestBody UnidadeOrcamentariaForm unidadeOrcamentariaForm, BindingResult br){
 
-        if(br.hasErrors()){
+        if(br.hasErrors())
+        {
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-        }else {
-            UnidadeOrcamentariaModel novaUnidadeOrcamentaria = unidadeOrcamentariaService.insertUnidadeOrcamentaria(unidadeOrcamentariaForm);
-            return ResponseEntity.ok().body(novaUnidadeOrcamentaria);
+        }else
+        {
+            UnidadeOrcamentariaDTo novaUnidadeOrcamentariaDTo = unidadeOrcamentariaService.insertUnidadeOrcamentaria(unidadeOrcamentariaForm);
+            return ResponseEntity.ok().body(novaUnidadeOrcamentariaDTo);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UnidadeOrcamentariaModel> update(@Valid @RequestBody UnidadeOrcamentariaForm unidadeOrcamentariaForm, @PathVariable("id") Integer id, BindingResult br){
-        if(br.hasErrors()){
+    public ResponseEntity<UnidadeOrcamentariaDTo> update(@Valid @RequestBody UnidadeOrcamentariaForm unidadeOrcamentariaForm, @PathVariable("id") Integer id, BindingResult br){
+        if(br.hasErrors())
+        {
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-        }else {
-            UnidadeOrcamentariaModel unidadeOrcamentariaUpdate = unidadeOrcamentariaService.updateUndOrcamentaria(unidadeOrcamentariaForm, id);
-            return  ResponseEntity.ok().body(unidadeOrcamentariaUpdate);
+        }else
+        {
+            UnidadeOrcamentariaDTo unidadeOrcamentariaUpdateDTo = unidadeOrcamentariaService.updateUndOrcamentaria(unidadeOrcamentariaForm, id);
+            return  ResponseEntity.ok().body(unidadeOrcamentariaUpdateDTo);
         }
     }
 

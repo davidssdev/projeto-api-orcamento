@@ -1,6 +1,7 @@
 package br.com.david.orcamento.rest.controller;
 
 import br.com.david.orcamento.model.GrupoDespesaModel;
+import br.com.david.orcamento.rest.dto.GrupoDespesaDTo;
 import br.com.david.orcamento.rest.form.GrupoDespesaForm;
 import br.com.david.orcamento.service.GrupoDespesaService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
@@ -21,33 +22,33 @@ public class GrupoDespesaController {
     GrupoDespesaService grupoDespesaService;
 
     @GetMapping
-    public ResponseEntity<List<GrupoDespesaModel>> findAll(){
-        List<GrupoDespesaModel> grupoList = grupoDespesaService.findAllGrupo();
+    public ResponseEntity<List<GrupoDespesaDTo>> findAll(){
+        List<GrupoDespesaDTo> grupoList = grupoDespesaService.findAllGrupo();
         return ResponseEntity.ok().body(grupoList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GrupoDespesaModel> find(@PathVariable("id") Integer id){
-        GrupoDespesaModel grupo = grupoDespesaService.findByIdGrupo(id);
+    public ResponseEntity<GrupoDespesaDTo> find(@PathVariable("id") Integer id){
+        GrupoDespesaDTo grupo = grupoDespesaService.findByIdGrupo(id);
         return ResponseEntity.ok().body(grupo);
     }
 
     @PostMapping
-    public ResponseEntity<GrupoDespesaModel> insert(@Valid @RequestBody GrupoDespesaForm grupoDespesaForm, BindingResult br){
+    public ResponseEntity<GrupoDespesaDTo> insert(@Valid @RequestBody GrupoDespesaForm grupoDespesaForm, BindingResult br){
         if(br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
-            GrupoDespesaModel novoGrupo = grupoDespesaService.insertGrupo(grupoDespesaForm);
+            GrupoDespesaDTo novoGrupo = grupoDespesaService.insertGrupo(grupoDespesaForm);
             return ResponseEntity.ok().body(novoGrupo);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GrupoDespesaModel> update(@Valid @RequestBody GrupoDespesaForm grupoDespesaForm, @PathVariable("id") Integer id, BindingResult br){
+    public ResponseEntity<GrupoDespesaDTo> update(@Valid @RequestBody GrupoDespesaForm grupoDespesaForm, @PathVariable("id") Integer id, BindingResult br){
         if(br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else{
-            GrupoDespesaModel grupoUpdate = grupoDespesaService.updateGrupo(grupoDespesaForm, id);
+            GrupoDespesaDTo grupoUpdate = grupoDespesaService.updateGrupo(grupoDespesaForm, id);
             return ResponseEntity.ok().body(grupoUpdate);
         }
     }

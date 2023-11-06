@@ -1,6 +1,7 @@
 package br.com.david.orcamento.rest.controller;
 
 import br.com.david.orcamento.model.FonteRecursoModel;
+import br.com.david.orcamento.rest.dto.FonteRecursoDTo;
 import br.com.david.orcamento.rest.form.FonteRecursoForm;
 import br.com.david.orcamento.service.FonteRecursoService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
@@ -21,33 +22,33 @@ public class FonteRecursoController {
     FonteRecursoService fonteRecursoService;
 
     @GetMapping
-    public ResponseEntity<List<FonteRecursoModel>> findAll(){
-        List<FonteRecursoModel> fonteList = fonteRecursoService.findAllFonte();
+    public ResponseEntity<List<FonteRecursoDTo>> findAll(){
+        List<FonteRecursoDTo> fonteList = fonteRecursoService.findAllFonte();
         return ResponseEntity.ok().body(fonteList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FonteRecursoModel> find(@PathVariable("id") Integer id){
-        FonteRecursoModel fonte = fonteRecursoService.findByIdFonte(id);
+    public ResponseEntity<FonteRecursoDTo> find(@PathVariable("id") Integer id){
+        FonteRecursoDTo fonte = fonteRecursoService.findByIdFonte(id);
         return ResponseEntity.ok().body(fonte);
     }
 
     @PostMapping
-    public ResponseEntity<FonteRecursoModel> insert(@Valid @RequestBody FonteRecursoForm fonteRecursoForm, BindingResult br){
+    public ResponseEntity<FonteRecursoDTo> insert(@Valid @RequestBody FonteRecursoForm fonteRecursoForm, BindingResult br){
         if(br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
-            FonteRecursoModel novaFonte = fonteRecursoService.insertFonte(fonteRecursoForm);
+            FonteRecursoDTo novaFonte = fonteRecursoService.insertFonte(fonteRecursoForm);
             return ResponseEntity.ok().body(novaFonte);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FonteRecursoModel> update(@Valid @RequestBody FonteRecursoForm fonteRecursoForm, @PathVariable("id") Integer id, BindingResult br){
+    public ResponseEntity<FonteRecursoDTo> update(@Valid @RequestBody FonteRecursoForm fonteRecursoForm, @PathVariable("id") Integer id, BindingResult br){
         if(br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
-            FonteRecursoModel updateFonte = fonteRecursoService.updateFonte(fonteRecursoForm, id);
+            FonteRecursoDTo updateFonte = fonteRecursoService.updateFonte(fonteRecursoForm, id);
             return ResponseEntity.ok().body(updateFonte);
         }
     }
