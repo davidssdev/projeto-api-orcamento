@@ -4,7 +4,6 @@ import br.com.david.orcamento.model.GrupoDespesaModel;
 import br.com.david.orcamento.rest.form.GrupoDespesaForm;
 import br.com.david.orcamento.service.GrupoDespesaService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

@@ -15,8 +15,6 @@ public interface LancamentoRepository extends JpaRepository<LancamentoModel, Int
 
     Optional<LancamentoModel> findByDescricao(String descricao);
 
-    //Filtragem a partir da data de cadastro
-    Optional<LancamentoModel> findByDataCadastro(Date dataCadastro);
 
     Optional<LancamentoModel> findByAnoOrcamento(Integer anoOrcamento);
 }

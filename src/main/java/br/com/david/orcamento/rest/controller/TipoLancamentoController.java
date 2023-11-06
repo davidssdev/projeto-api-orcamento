@@ -1,13 +1,9 @@
 package br.com.david.orcamento.rest.controller;
 
-import br.com.david.orcamento.model.SolicitanteModel;
 import br.com.david.orcamento.model.TipoLancamentoModel;
-import br.com.david.orcamento.repository.TipoLancamentoRepository;
-import br.com.david.orcamento.rest.form.SolicitanteForm;
 import br.com.david.orcamento.rest.form.TipoLancamentoForm;
 import br.com.david.orcamento.service.TipoLancamentoService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
-import ch.qos.logback.core.rolling.TimeBasedFileNamingAndTriggeringPolicyBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

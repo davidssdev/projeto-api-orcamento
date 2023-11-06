@@ -53,7 +53,7 @@ public class SolicitanteService {
             if(solicitanteExist.isPresent()){
                 SolicitanteModel solicitanteUpdate = solicitanteExist.get();
                 solicitanteUpdate.setNome(solicitanteForm.getNome());
-                solicitanteUpdate.setDataAlteracao(dtAtual);
+                solicitanteUpdate.setData_alteracao(dtAtual);
 
                 solicitanteRepository.save(solicitanteUpdate);
                 return solicitanteUpdate;
@@ -82,7 +82,7 @@ public class SolicitanteService {
         var dtAtual = LocalDate.now();
 
         convertSolicitante.setNome(solicitanteForm.getNome());
-        convertSolicitante.setDataCadastro(dtAtual);
+        convertSolicitante.setData_cadastro(dtAtual);
 
         return convertSolicitante;
     }

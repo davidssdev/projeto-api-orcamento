@@ -53,7 +53,7 @@ public class AcaoService {
                 AcaoModel acaoUpdate = acaoExist.get();
                 acaoUpdate.setCodigo(acaoForm.getCodigo());
                 acaoUpdate.setNome(acaoForm.getNome());
-                acaoUpdate.setDataAlteracao(dtAtual);
+                acaoUpdate.setData_alteracao(dtAtual);
 
                 acaoRepository.save(acaoUpdate);
                 return acaoUpdate;
@@ -83,7 +83,7 @@ public class AcaoService {
 
         convertAcao.setCodigo(acaoForm.getCodigo());
         convertAcao.setNome(acaoForm.getNome());
-        convertAcao.setDataCadastro(dtAtual);
+        convertAcao.setData_cadastro(dtAtual);
 
         return convertAcao;
     }

@@ -16,7 +16,7 @@ public class TipoTransacaoForm {
     @Size(max = 600)
     private String nome;
 
-    private LocalDate dataCadastro;
+    private LocalDate data_cadastro;
 
-    private LocalDate dataAlteracao;
+    private LocalDate data_alteracao;
 }

@@ -57,7 +57,6 @@ public class LancamentoService {
                 lancamentoUpdate.setLancamentoInvalido(lancamentoForm.getLancamentoInvalido());
                 lancamentoUpdate.setNumeroLancamento(lancamentoForm.getNumeroLancamento());
                 lancamentoUpdate.setIdTipoLancamento(lancamentoForm.getIdTipoLancamento());
-                lancamentoUpdate.setDataLancamento(dtAtual);
                 lancamentoUpdate.setIdLancamentoPai(lancamentoForm.getIdLancamentoPai());
                 lancamentoUpdate.setIdUnidade(lancamentoForm.getIdUnidade());
                 lancamentoUpdate.setDescricao(lancamentoForm.getDescricao());
@@ -74,7 +73,7 @@ public class LancamentoService {
                 lancamentoUpdate.setIdObjetivoEstrategico(lancamentoForm.getIdObjetivoEstrategico());
                 lancamentoUpdate.setValor(lancamentoForm.getValor());
                 lancamentoUpdate.setIdTipoTransacao(lancamentoForm.getIdTipoTransacao());
-                lancamentoUpdate.setDataAlteracao(dtAtual);
+                lancamentoUpdate.setData_alteracao(dtAtual);
                 lancamentoUpdate.setAnoOrcamento(lancamentoForm.getAnoOrcamento());
 
                 lancamentoRepository.save(lancamentoUpdate);
@@ -107,7 +106,7 @@ public class LancamentoService {
         ConvertLancamento.setLancamentoInvalido(lancamentoForm.getLancamentoInvalido());
         ConvertLancamento.setNumeroLancamento(lancamentoForm.getNumeroLancamento());
         ConvertLancamento.setIdTipoLancamento(lancamentoForm.getIdTipoLancamento());
-        ConvertLancamento.setDataLancamento(dtAtual);
+        ConvertLancamento.setData_lancamento(dtAtual);
         ConvertLancamento.setIdLancamentoPai(lancamentoForm.getIdLancamentoPai());
         ConvertLancamento.setIdUnidade(lancamentoForm.getIdUnidade());
         ConvertLancamento.setDescricao(lancamentoForm.getDescricao());
@@ -124,7 +123,7 @@ public class LancamentoService {
         ConvertLancamento.setIdObjetivoEstrategico(lancamentoForm.getIdObjetivoEstrategico());
         ConvertLancamento.setValor(lancamentoForm.getValor());
         ConvertLancamento.setIdTipoTransacao(lancamentoForm.getIdTipoTransacao());
-        ConvertLancamento.setDataCadastro(dtAtual);
+        ConvertLancamento.setData_cadastro(dtAtual);
         ConvertLancamento.setAnoOrcamento(lancamentoForm.getAnoOrcamento());
 
         return ConvertLancamento;

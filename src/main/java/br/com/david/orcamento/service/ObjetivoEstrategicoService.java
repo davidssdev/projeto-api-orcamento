@@ -52,7 +52,7 @@ public class ObjetivoEstrategicoService {
             if(objetivosExist.isPresent()){
                 ObjetivoEstrategicoModel objetivosUpdate = objetivosExist.get();
                 objetivosUpdate.setNome(objetivosEstrategicosForm.getNome());
-                objetivosUpdate.setDataAlteracao(dtAtual);
+                objetivosUpdate.setData_alteracao(dtAtual);
 
                 objetivoEstrategicosRepository.save(objetivosUpdate);
                 return objetivosUpdate;
@@ -81,7 +81,7 @@ public class ObjetivoEstrategicoService {
         var dtAtual = LocalDate.now();
 
         convertObjetivos.setNome(objetivosEstrategicosForm.getNome());
-        convertObjetivos.setDataCadastro(dtAtual);
+        convertObjetivos.setData_cadastro(dtAtual);
 
         return convertObjetivos;
     }

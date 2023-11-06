@@ -56,7 +56,7 @@ public class GrupoDespesaService {
                 GrupoDespesaModel grupoUpdate = grupoExist.get();
                 grupoUpdate.setCodigo(grupoDespesaForm.getCodigo());
                 grupoUpdate.setNome(grupoDespesaForm.getNome());
-                grupoUpdate.setDataAlteracao(dtAtual);
+                grupoUpdate.setData_alteracao(dtAtual);
 
                 grupoDespesaRepository.save(grupoUpdate);
                 return grupoUpdate;
@@ -86,7 +86,7 @@ public class GrupoDespesaService {
 
         convertGrupo.setCodigo(grupoDespesaForm.getCodigo());
         convertGrupo.setNome(grupoDespesaForm.getNome());
-        convertGrupo.setDataCadastro(dtAtual);
+        convertGrupo.setData_cadastro(dtAtual);
 
         return convertGrupo;
     }

@@ -54,7 +54,7 @@ public class ProgramaService {
 
                 programaUpdate.setCodigo(programaForm.getCodigo());
                 programaUpdate.setNome(programaForm.getNome());
-                programaUpdate.setDataAlteracao(dtAtual);
+                programaUpdate.setData_alteracao(dtAtual);
 
                 programaRepository.save(programaUpdate);
                 return programaUpdate;
@@ -84,7 +84,7 @@ public class ProgramaService {
 
         convertPrograma.setCodigo(programaForm.getCodigo());
         convertPrograma.setNome(programaForm.getNome());
-        convertPrograma.setDataCadastro(dtAtual);
+        convertPrograma.setData_cadastro(dtAtual);
 
         return convertPrograma;
     }

@@ -56,7 +56,7 @@ public class ElementoDespesaService {
                 ElementoDespesaModel elementoUpdate = elementoExist.get();
                 elementoUpdate.setCodigo(elementoDespesaForm.getCodigo());
                 elementoUpdate.setNome(elementoDespesaForm.getNome());
-                elementoUpdate.setDataAlteracao(dtAtual);
+                elementoUpdate.setData_alteracao(dtAtual);
 
                 elementoDespesaRepository.save(elementoUpdate);
                 return elementoUpdate;
@@ -86,7 +86,7 @@ public class ElementoDespesaService {
 
         elementoModel.setCodigo(elementoDespesaForm.getCodigo());
         elementoModel.setNome(elementoDespesaForm.getNome());
-        elementoModel.setDataCadastro(dtAtual);
+        elementoModel.setData_cadastro(dtAtual);
 
         return elementoModel;
     }

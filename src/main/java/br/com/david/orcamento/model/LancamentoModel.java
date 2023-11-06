@@ -25,8 +25,8 @@ public class LancamentoModel {
     private Integer idTipoLancamento;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "dataLancamento", nullable = false)
-    private LocalDate dataLancamento;
+    @Column(name = "data_lancamento", nullable = false)
+    private LocalDate data_lancamento;
 
     @Column(name = "idLancamentoPai", nullable = true)
     private Integer idLancamentoPai;
@@ -77,12 +77,12 @@ public class LancamentoModel {
     private Integer idTipoTransacao;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "dataCadastro", nullable = false)
-    private LocalDate dataCadastro;
+    @Column(name = "data_cadastro", nullable = false)
+    private LocalDate data_cadastro;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "dataAlteracao", nullable = true)
-    private LocalDate dataAlteracao;
+    @Column(name = "data_alteracao", nullable = true)
+    private LocalDate data_alteracao;
 
     @Column(name = "anoOrcamento", nullable = false)
     private Integer  anoOrcamento;

@@ -1,3 +1,7 @@
+Versão 1.0.68
+
+    - Implementação das configurações da conexão sqlserver e alteração de dados das models
+
 Versão 1.0.65
 
     - Implementação dos serviços e controllers geral.

@@ -54,7 +54,7 @@ public class TipoTransacaoService {
             if(tipoTransacaoExist.isPresent()){
                 TipoTransacaoModel tipoTransacaoUpdate = tipoTransacaoExist.get();
                 tipoTransacaoUpdate.setNome(tipoTransacaoForm.getNome());
-                tipoTransacaoUpdate.setDataAlteracao(dtAtual);
+                tipoTransacaoUpdate.setData_alteracao(dtAtual);
 
                 tipoTransacaoRepository.save(tipoTransacaoUpdate);
                 return tipoTransacaoUpdate;
@@ -83,7 +83,7 @@ public class TipoTransacaoService {
         var dtAtual = LocalDate.now();
 
         convertTipoTransacao.setNome(tipoTransacaoForm.getNome());
-        convertTipoTransacao.setDataCadastro(dtAtual);
+        convertTipoTransacao.setData_cadastro(dtAtual);
 
         return convertTipoTransacao;
     }

@@ -22,7 +22,7 @@ public class AcaoForm {
     private String nome;
 
     //Data de cadastro e atualização pré definida na API
-    private LocalDate dataCadastro;
+    private LocalDate data_cadastro;
 
-    private LocalDate dataAlteracao;
+    private LocalDate data_alteracao;
 }

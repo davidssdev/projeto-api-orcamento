@@ -5,11 +5,11 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
+
 
 @Entity
 @Data
-@Table(name = "modalidadeAplicacao")
+@Table(name = "modalidade_aplicacao")
 public class ModalidadeAplicacaoModel {
 
     @Id
@@ -23,11 +23,11 @@ public class ModalidadeAplicacaoModel {
     private String nome;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "dataCadastro", nullable = false)
-    private LocalDate dataCadastro;
+    @Column(name = "data_cadastro", nullable = false)
+    private LocalDate data_cadastro;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "dataAlteracao", nullable = true)
-    private LocalDate dataAlteracao;
+    @Column(name = "data_alteracao", nullable = true)
+    private LocalDate data_alteracao;
 
 }

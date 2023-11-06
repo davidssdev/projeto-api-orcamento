@@ -55,7 +55,7 @@ public class UnidadeOrcamentariaService {
                 UnidadeOrcamentariaModel undOrcamentariaUpdate = unidadeOrcamentariaExist.get();
                 undOrcamentariaUpdate.setCodigo(unidadeOrcamentariaForm.getCodigo());
                 undOrcamentariaUpdate.setNome(unidadeOrcamentariaForm.getNome());
-                undOrcamentariaUpdate.setDataAlteracao(dtAtual);
+                undOrcamentariaUpdate.setData_alteracao(dtAtual);
 
                 unidadeOrcamentoRepository.save(undOrcamentariaUpdate);
                 return undOrcamentariaUpdate;
@@ -85,7 +85,7 @@ public class UnidadeOrcamentariaService {
 
         convertUndOrcamentaria.setCodigo(unidadeOrcamentariaForm.getCodigo());
         convertUndOrcamentaria.setNome(unidadeOrcamentariaForm.getNome());
-        convertUndOrcamentaria.setDataCadastro(dtAtual);
+        convertUndOrcamentaria.setData_cadastro(dtAtual);
 
         return convertUndOrcamentaria;
     }

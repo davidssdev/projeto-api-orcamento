@@ -1,8 +1,7 @@
 package br.com.david.orcamento.rest.controller;
 
-import br.com.david.orcamento.model.ProgramaModel;
+
 import br.com.david.orcamento.model.SolicitanteModel;
-import br.com.david.orcamento.rest.form.ProgramaForm;
 import br.com.david.orcamento.rest.form.SolicitanteForm;
 import br.com.david.orcamento.service.SolicitanteService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/solicitante")

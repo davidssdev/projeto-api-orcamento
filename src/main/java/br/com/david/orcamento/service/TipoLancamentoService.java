@@ -54,7 +54,7 @@ public class TipoLancamentoService {
             if(tipoLancamentoExist.isPresent()){
                 TipoLancamentoModel tipoLancamentoUpdate = tipoLancamentoExist.get();
                 tipoLancamentoUpdate.setNome(tipoLancamentoForm.getNome());
-                tipoLancamentoUpdate.setDataAlteracao(dtAtual);
+                tipoLancamentoUpdate.setData_alteracao(dtAtual);
 
                 tipoLancamentoRepository.save(tipoLancamentoUpdate);
                 return tipoLancamentoUpdate;
@@ -83,7 +83,7 @@ public class TipoLancamentoService {
         var dtAtual = LocalDate.now();
 
         convertTipoLancamento.setNome(tipoLancamentoForm.getNome());
-        convertTipoLancamento.setDataCadastro(dtAtual);
+        convertTipoLancamento.setData_cadastro(dtAtual);
 
         return convertTipoLancamento;
     }

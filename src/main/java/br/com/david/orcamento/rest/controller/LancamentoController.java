@@ -4,7 +4,6 @@ import br.com.david.orcamento.model.LancamentoModel;
 import br.com.david.orcamento.rest.form.LancamentoForm;
 import br.com.david.orcamento.service.LancamentoService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
-import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

@@ -54,7 +54,7 @@ public class UnidadeService {
             if(unidadeExist.isPresent()){
                 UnidadeModel unidadeUpdate = unidadeExist.get();
                 unidadeUpdate.setNome(unidadeForm.getNome());
-                unidadeUpdate.setDataAlteracao(dtAtual);
+                unidadeUpdate.setData_alteracao(dtAtual);
 
                 unidadeRepository.save(unidadeUpdate);
                 return unidadeUpdate;
@@ -83,7 +83,7 @@ public class UnidadeService {
         var dtAtual = LocalDate.now();
 
         convertUnidade.setNome(unidadeForm.getNome());
-        convertUnidade.setDataCadastro(dtAtual);
+        convertUnidade.setData_cadastro(dtAtual);
 
         return convertUnidade;
     }

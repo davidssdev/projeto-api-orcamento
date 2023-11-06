@@ -1,6 +1,5 @@
 package br.com.david.orcamento.rest.controller;
 
-import br.com.david.orcamento.model.AcaoModel;
 import br.com.david.orcamento.model.ProgramaModel;
 import br.com.david.orcamento.rest.form.ProgramaForm;
 import br.com.david.orcamento.service.ProgramaService;
@@ -11,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transaction;
-import javax.transaction.TransactionScoped;
 import javax.validation.Valid;
 import java.util.List;
 

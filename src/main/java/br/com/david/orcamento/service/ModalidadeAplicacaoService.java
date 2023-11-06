@@ -55,7 +55,7 @@ public class ModalidadeAplicacaoService {
                 ModalidadeAplicacaoModel modalidadeUpdate = modalidadeExist.get();
                 modalidadeUpdate.setCodigo(modalidadeAplicacaoForm.getCodigo());
                 modalidadeUpdate.setNome(modalidadeAplicacaoForm.getNome());
-                modalidadeUpdate.setDataAlteracao(dtAtual);
+                modalidadeUpdate.setData_alteracao(dtAtual);
 
                 modalidadeAplicacaoRepository.save(modalidadeUpdate);
                 return modalidadeUpdate;
@@ -85,7 +85,7 @@ public class ModalidadeAplicacaoService {
 
         convertModalidade.setCodigo(modalidadeAplicacaoForm.getCodigo());
         convertModalidade.setNome(modalidadeAplicacaoForm.getNome());
-        convertModalidade.setDataCadastro(dtAtual);
+        convertModalidade.setData_cadastro(dtAtual);
 
         return convertModalidade;
     }

@@ -1,8 +1,6 @@
 package br.com.david.orcamento.rest.controller;
 
-import br.com.david.orcamento.model.TipoTransacaoModel;
 import br.com.david.orcamento.model.UnidadeModel;
-import br.com.david.orcamento.rest.form.TipoTransacaoForm;
 import br.com.david.orcamento.rest.form.UnidadeForm;
 import br.com.david.orcamento.service.UnidadeService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;

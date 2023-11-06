@@ -74,9 +74,9 @@ public class LancamentoForm {
     @NotNull(message = "O Ano do Orcamento não pode ser nulo")
     private Integer anoOrcamento;
 
-    private LocalDate dataCadastro;
+    private LocalDate data_cadastro;
 
-    private LocalDate dataAlteracao;
+    private LocalDate data_alteracao;
     //Data do lancamento esta igual a dataCadastro, aguardando regra para modificação
-    private LocalDate dataLancamento;
+    private LocalDate data_lancamento;
 }

@@ -55,7 +55,7 @@ public class FonteRecursoService {
                 FonteRecursoModel fonteUpdate = acaoExist.get();
                 fonteUpdate.setCodigo(fonteRecursoForm.getCodigo());
                 fonteUpdate.setNome(fonteRecursoForm.getNome());
-                fonteUpdate.setDataAlteracao(dtAtual);
+                fonteUpdate.setData_alteracao(dtAtual);
 
                 fonteRecursoRepository.save(fonteUpdate);
                 return fonteUpdate;
@@ -85,7 +85,7 @@ public class FonteRecursoService {
 
         convertFonte.setCodigo(fonteRecursoForm.getCodigo());
         convertFonte.setNome(fonteRecursoForm.getNome());
-        convertFonte.setDataCadastro(dtAtual);
+        convertFonte.setData_cadastro(dtAtual);
 
         return convertFonte;
     }
