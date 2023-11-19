@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 @Data
 public class LancamentoForm {
 
-    private Integer id;
-
     @NotNull(message = "O campo Lancamento Inválido não pode ser nulo!")
     private Integer lacamento_invalido;
 
@@ -34,11 +32,11 @@ public class LancamentoForm {
     @NotNull(message = "O campo Unidade Orcamentaria não pode ser vazio!")
     private Integer id_unidade_orcamentaria;
 
-    @NotNull(message = "O campo Ação não pode ser vazio!")
-    private Integer id_acao;
-
     @NotNull(message = "O Programa não pode ser nulo")
     private Integer id_programa;
+
+    @NotNull(message = "O campo Ação não pode ser vazio!")
+    private Integer id_acao;
 
     @NotNull(message = "O campo Fonte de recurso não pode ser vazio!")
     private Integer id_fonte_recurso;
