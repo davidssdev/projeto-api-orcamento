@@ -1,6 +1,8 @@
 package br.com.david.orcamento.service;
 
+import br.com.david.orcamento.model.LancamentoModel;
 import br.com.david.orcamento.model.SolicitanteModel;
+import br.com.david.orcamento.repository.LancamentoRepository;
 import br.com.david.orcamento.repository.SolicitanteRepository;
 import br.com.david.orcamento.rest.components.DataFormato;
 import br.com.david.orcamento.rest.dto.SolicitanteDTo;
@@ -23,7 +25,8 @@ public class SolicitanteService {
 
     @Autowired
     SolicitanteRepository solicitanteRepository;
-
+    @Autowired
+    LancamentoRepository lancamentoRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -94,7 +97,16 @@ public class SolicitanteService {
         {
             if(solicitanteRepository.existsById(id))
             {
-                solicitanteRepository.deleteById(id);
+                List<LancamentoModel> lancamentos = lancamentoRepository.findAll();
+
+                for (LancamentoModel lancamento : lancamentos ) {
+                    if (!(lancamento.getId_solicitante().equals(id))){
+                        solicitanteRepository.deleteById(id);
+                    } else {
+                        throw new DataIntegrityException("Este solicitante esta contido em um lançamento!");
+                    }
+                }
+
             }else
             {
                 throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");

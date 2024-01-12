@@ -1,7 +1,9 @@
 package br.com.david.orcamento.service;
 
 import br.com.david.orcamento.model.AcaoModel;
+import br.com.david.orcamento.model.LancamentoModel;
 import br.com.david.orcamento.model.UnidadeOrcamentariaModel;
+import br.com.david.orcamento.repository.LancamentoRepository;
 import br.com.david.orcamento.repository.UnidadeOrcamentoRepository;
 import br.com.david.orcamento.rest.components.DataFormato;
 import br.com.david.orcamento.rest.dto.UnidadeOrcamentariaDTo;
@@ -26,7 +28,8 @@ public class UnidadeOrcamentariaService {
 
     @Autowired
     UnidadeOrcamentoRepository unidadeOrcamentoRepository;
-
+    @Autowired
+    LancamentoRepository lancamentoRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -98,7 +101,16 @@ public class UnidadeOrcamentariaService {
         {
             if (unidadeOrcamentoRepository.existsById(id))
             {
-                unidadeOrcamentoRepository.deleteById(id);
+                List<LancamentoModel> lancamentos = lancamentoRepository.findAll();
+
+                for (LancamentoModel lancamento : lancamentos ) {
+                    if (!(lancamento.getId_unidade_orcamentaria().equals(id))){
+                        unidadeOrcamentoRepository.deleteById(id);
+                    } else {
+                        throw new DataIntegrityException("Esta UND Orçamentaria esta contida em um lançamento!");
+                    }
+                }
+
             } else
             {
                 throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");

@@ -1,3 +1,8 @@
+Versão 1.0.72
+
+    - Implementação no service e controller da consulta de lista dos tipos de lançamentos através de procedure.
+    - Tratamento de dados para o evento exlcuir(deleteById) item de uma tabela que possui realacionamento com a tabela principal.
+
 Versão 1.0.70
 
     - Implementação do ModelMapper nos serviços das models.

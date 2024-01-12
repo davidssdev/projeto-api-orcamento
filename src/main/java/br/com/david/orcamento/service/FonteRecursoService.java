@@ -2,7 +2,9 @@ package br.com.david.orcamento.service;
 
 import br.com.david.orcamento.model.AcaoModel;
 import br.com.david.orcamento.model.FonteRecursoModel;
+import br.com.david.orcamento.model.LancamentoModel;
 import br.com.david.orcamento.repository.FonteRecursoRepository;
+import br.com.david.orcamento.repository.LancamentoRepository;
 import br.com.david.orcamento.rest.components.DataFormato;
 import br.com.david.orcamento.rest.dto.FonteRecursoDTo;
 import br.com.david.orcamento.rest.form.AcaoForm;
@@ -26,7 +28,8 @@ public class FonteRecursoService {
 
     @Autowired
     FonteRecursoRepository fonteRecursoRepository;
-
+    @Autowired
+    LancamentoRepository lancamentoRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -100,7 +103,16 @@ public class FonteRecursoService {
         {
             if (fonteRecursoRepository.existsById(id))
             {
-                fonteRecursoRepository.deleteById(id);
+                List<LancamentoModel> lancamentos = lancamentoRepository.findAll();
+
+                for (LancamentoModel lancamento : lancamentos ) {
+                    if (!(lancamento.getId_fonte_recurso().equals(id))){
+                        fonteRecursoRepository.deleteById(id);
+                    } else {
+                        throw new DataIntegrityException("Esta fonte esta contida em um lançamento!");
+                    }
+                }
+
             } else
             {
                 throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");

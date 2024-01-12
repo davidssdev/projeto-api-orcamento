@@ -3,7 +3,9 @@ package br.com.david.orcamento.service;
 import br.com.david.orcamento.model.AcaoModel;
 import br.com.david.orcamento.model.FonteRecursoModel;
 import br.com.david.orcamento.model.GrupoDespesaModel;
+import br.com.david.orcamento.model.LancamentoModel;
 import br.com.david.orcamento.repository.GrupoDespesaRepository;
+import br.com.david.orcamento.repository.LancamentoRepository;
 import br.com.david.orcamento.rest.components.DataFormato;
 import br.com.david.orcamento.rest.dto.FonteRecursoDTo;
 import br.com.david.orcamento.rest.dto.GrupoDespesaDTo;
@@ -30,7 +32,8 @@ public class GrupoDespesaService {
 
     @Autowired
     GrupoDespesaRepository grupoDespesaRepository;
-
+    @Autowired
+    LancamentoRepository lancamentoRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -103,7 +106,16 @@ public class GrupoDespesaService {
         {
             if (grupoDespesaRepository.existsById(id))
             {
-                grupoDespesaRepository.deleteById(id);
+                List<LancamentoModel> lancamentos = lancamentoRepository.findAll();
+
+                for (LancamentoModel lancamento : lancamentos ) {
+                    if (!(lancamento.getId_grupo_despesa().equals(id))){
+                        grupoDespesaRepository.deleteById(id);
+                    } else {
+                        throw new DataIntegrityException("Este grupo esta contida em um lançamento!");
+                    }
+                }
+
             } else
             {
                 throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");

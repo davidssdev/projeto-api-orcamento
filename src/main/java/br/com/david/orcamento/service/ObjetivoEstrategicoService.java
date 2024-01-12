@@ -1,6 +1,8 @@
 package br.com.david.orcamento.service;
 
+import br.com.david.orcamento.model.LancamentoModel;
 import br.com.david.orcamento.model.ObjetivoEstrategicoModel;
+import br.com.david.orcamento.repository.LancamentoRepository;
 import br.com.david.orcamento.repository.ObjetivoEstrategicosRepository;
 import br.com.david.orcamento.rest.components.DataFormato;
 import br.com.david.orcamento.rest.dto.ObjetivoEstrategicoDTo;
@@ -23,7 +25,8 @@ public class ObjetivoEstrategicoService {
 
     @Autowired
     ObjetivoEstrategicosRepository objetivoEstrategicosRepository;
-
+    @Autowired
+    LancamentoRepository lancamentoRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -93,7 +96,16 @@ public class ObjetivoEstrategicoService {
         {
             if (objetivoEstrategicosRepository.existsById(id))
             {
-                objetivoEstrategicosRepository.deleteById(id);
+                List<LancamentoModel> lancamentos = lancamentoRepository.findAll();
+
+                for (LancamentoModel lancamento : lancamentos ) {
+                    if (!(lancamento.getId_objetivo_estrategico().equals(id))){
+                        objetivoEstrategicosRepository.deleteById(id);
+                    } else {
+                        throw new DataIntegrityException("Este Objetivo esta contido em um lançamento!");
+                    }
+                }
+
             } else
             {
                 throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");

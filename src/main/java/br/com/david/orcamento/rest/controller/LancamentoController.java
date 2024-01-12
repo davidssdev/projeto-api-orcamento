@@ -6,6 +6,7 @@ import br.com.david.orcamento.rest.form.LancamentoForm;
 import br.com.david.orcamento.service.LancamentoService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 @RequestMapping("lancamento")
 public class LancamentoController {
 
@@ -35,8 +37,14 @@ public class LancamentoController {
         return ResponseEntity.ok().body(lancamentoDTo);
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<List<Object>> listDescLancamento(){
+        List<Object> dados = lancamentoService.listLancamentos();
+        return new ResponseEntity<>(dados, HttpStatus.OK);
+    }
+
     @PostMapping
-    public ResponseEntity<LancamentoDTo> insert(@Valid @RequestBody LancamentoForm lancamentoForm, BindingResult br){
+    public ResponseEntity<LancamentoDTo> insert(@RequestBody LancamentoForm lancamentoForm, BindingResult br){
         if (br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {
@@ -46,7 +54,7 @@ public class LancamentoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LancamentoDTo> update(@Valid @RequestBody LancamentoForm lancamentoForm, @PathVariable("id") Integer id, BindingResult br){
+    public ResponseEntity<LancamentoDTo> update(@RequestBody LancamentoForm lancamentoForm, @PathVariable("id") Integer id, BindingResult br){
         if (br.hasErrors()){
             throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
         }else {

@@ -1,28 +1,39 @@
 package br.com.david.orcamento.service;
 
 import br.com.david.orcamento.model.AcaoModel;
+import br.com.david.orcamento.model.LancamentoModel;
 import br.com.david.orcamento.repository.AcaoRepository;
+import br.com.david.orcamento.repository.LancamentoRepository;
 import br.com.david.orcamento.rest.components.DataFormato;
 import br.com.david.orcamento.rest.dto.AcaoDTo;
 import br.com.david.orcamento.rest.form.AcaoForm;
 import br.com.david.orcamento.service.exceptions.DataIntegrityException;
 import br.com.david.orcamento.service.exceptions.ObjectNotFoundException;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
 @Service
 public class AcaoService {
 
+    @PersistenceContext
+    EntityManager entityManager;
+
     @Autowired
     AcaoRepository acaoRepository;
+
+    @Autowired
+    LancamentoRepository lancamentoRepository;
 
     @Autowired
     ModelMapper modelMapper = new ModelMapper();
@@ -99,7 +110,16 @@ public class AcaoService {
         {
             if (acaoRepository.existsById(id))
             {
-                acaoRepository.deleteById(id);
+                List<LancamentoModel> lancamentos = lancamentoRepository.findAll();
+
+                for (LancamentoModel lancamento : lancamentos ) {
+                    if (!(lancamento.getId_acao().equals(id))){
+                        acaoRepository.deleteById(id);
+                    } else {
+                      throw new DataIntegrityException("Esta ação esta contida em um lançamento!");
+                    }
+                }
+
             } else
             {
                 throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");
@@ -142,4 +162,12 @@ public class AcaoService {
 
         return listAcaoDto;
     }
+
+    public List<AcaoDTo> consultAcoes(){
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("sp_ListAcao");
+        query.execute();
+
+        return query.getResultList();
+    }
+
 }

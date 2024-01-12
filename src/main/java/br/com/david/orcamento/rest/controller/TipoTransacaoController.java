@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/tipo-transacao")
 public class TipoTransacaoController {
 

@@ -1,7 +1,9 @@
 package br.com.david.orcamento.service;
 
+import br.com.david.orcamento.model.LancamentoModel;
 import br.com.david.orcamento.model.TipoLancamentoModel;
 import br.com.david.orcamento.model.TipoTransacaoModel;
+import br.com.david.orcamento.repository.LancamentoRepository;
 import br.com.david.orcamento.repository.TipoTransacaoRepository;
 import br.com.david.orcamento.rest.components.DataFormato;
 import br.com.david.orcamento.rest.dto.TipoLancamentoDTo;
@@ -27,7 +29,8 @@ public class TipoTransacaoService {
 
     @Autowired
     TipoTransacaoRepository tipoTransacaoRepository;
-
+    @Autowired
+    LancamentoRepository lancamentoRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -100,7 +103,16 @@ public class TipoTransacaoService {
         {
             if (tipoTransacaoRepository.existsById(id))
             {
-                tipoTransacaoRepository.deleteById(id);
+                List<LancamentoModel> lancamentos = lancamentoRepository.findAll();
+
+                for (LancamentoModel lancamento : lancamentos ) {
+                    if (!(lancamento.getId_tipo_transacao().equals(id))){
+                        tipoTransacaoRepository.deleteById(id);
+                    } else {
+                        throw new DataIntegrityException("Este tp transação esta contido em um lançamento!");
+                    }
+                }
+
             } else
             {
                 throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");

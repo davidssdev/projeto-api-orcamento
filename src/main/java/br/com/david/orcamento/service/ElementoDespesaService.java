@@ -1,7 +1,9 @@
 package br.com.david.orcamento.service;
 
 import br.com.david.orcamento.model.ElementoDespesaModel;
+import br.com.david.orcamento.model.LancamentoModel;
 import br.com.david.orcamento.repository.ElementoDespesaRepository;
+import br.com.david.orcamento.repository.LancamentoRepository;
 import br.com.david.orcamento.rest.components.DataFormato;
 import br.com.david.orcamento.rest.dto.ElementoDespesaDTo;
 import br.com.david.orcamento.rest.form.AcaoForm;
@@ -26,7 +28,8 @@ public class ElementoDespesaService {
 
     @Autowired
     ElementoDespesaRepository elementoDespesaRepository;
-
+    @Autowired
+    LancamentoRepository lancamentoRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -99,7 +102,16 @@ public class ElementoDespesaService {
         {
             if (elementoDespesaRepository.existsById(id))
             {
-                elementoDespesaRepository.deleteById(id);
+                List<LancamentoModel> lancamentos = lancamentoRepository.findAll();
+
+                for (LancamentoModel lancamento : lancamentos ) {
+                    if (!(lancamento.getId_elemento_despesa().equals(id))){
+                        elementoDespesaRepository.deleteById(id);
+                    } else {
+                        throw new DataIntegrityException("Este elemento esta contido em um lançamento!");
+                    }
+                }
+
             } else
             {
                 throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");

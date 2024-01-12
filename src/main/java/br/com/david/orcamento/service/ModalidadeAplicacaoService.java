@@ -1,7 +1,9 @@
 package br.com.david.orcamento.service;
 
 import br.com.david.orcamento.model.AcaoModel;
+import br.com.david.orcamento.model.LancamentoModel;
 import br.com.david.orcamento.model.ModalidadeAplicacaoModel;
+import br.com.david.orcamento.repository.LancamentoRepository;
 import br.com.david.orcamento.repository.ModalidadeAplicacaoRepository;
 import br.com.david.orcamento.rest.components.DataFormato;
 import br.com.david.orcamento.rest.dto.ModalidadeAplicacaoDTo;
@@ -26,7 +28,8 @@ public class ModalidadeAplicacaoService {
 
     @Autowired
     ModalidadeAplicacaoRepository modalidadeAplicacaoRepository;
-
+    @Autowired
+    LancamentoRepository lancamentoRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -99,7 +102,16 @@ public class ModalidadeAplicacaoService {
         {
             if(modalidadeAplicacaoRepository.existsById(id))
             {
-                modalidadeAplicacaoRepository.deleteById(id);
+                List<LancamentoModel> lancamentos = lancamentoRepository.findAll();
+
+                for (LancamentoModel lancamento : lancamentos ) {
+                    if (!(lancamento.getId_modalidade_aplicacao().equals(id))){
+                        modalidadeAplicacaoRepository.deleteById(id);
+                    } else {
+                        throw new DataIntegrityException("Esta modalidade esta contida em um lançamento!");
+                    }
+                }
+
             }else
             {
                 throw new ObjectNotFoundException("Códido de ID: " + id + " não encontrado!");

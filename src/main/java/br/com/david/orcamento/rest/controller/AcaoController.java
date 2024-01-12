@@ -6,6 +6,7 @@ import br.com.david.orcamento.rest.form.AcaoForm;
 import br.com.david.orcamento.service.AcaoService;
 import br.com.david.orcamento.service.exceptions.ConstraintException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,11 +16,18 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/acoes")
+@CrossOrigin
+@RequestMapping("/acao")
 public class AcaoController {
 
     @Autowired
     private AcaoService acaoServcie;
+
+    @GetMapping("/query")
+    public ResponseEntity<List<AcaoDTo>> consulta(){
+        List<AcaoDTo> dados = acaoServcie.consultAcoes();
+        return new ResponseEntity<>(dados, HttpStatus.OK);
+    }
 
     @GetMapping
     public ResponseEntity<List<AcaoDTo>> findAll(){

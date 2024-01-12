@@ -1,7 +1,9 @@
 package br.com.david.orcamento.service;
 
+import br.com.david.orcamento.model.LancamentoModel;
 import br.com.david.orcamento.model.SolicitanteModel;
 import br.com.david.orcamento.model.TipoLancamentoModel;
+import br.com.david.orcamento.repository.LancamentoRepository;
 import br.com.david.orcamento.repository.TipoLancamentoRepository;
 import br.com.david.orcamento.rest.components.DataFormato;
 import br.com.david.orcamento.rest.dto.TipoLancamentoDTo;
@@ -14,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,9 +29,13 @@ import java.util.Optional;
 @Service
 public class TipoLancamentoService {
 
+    @PersistenceContext
+    EntityManager entityManager;
+
     @Autowired
     TipoLancamentoRepository tipoLancamentoRepository;
-
+    @Autowired
+    LancamentoRepository lancamentoRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -96,7 +105,16 @@ public class TipoLancamentoService {
         {
             if (tipoLancamentoRepository.existsById(id))
             {
-                tipoLancamentoRepository.deleteById(id);
+                List<LancamentoModel> lancamentos = lancamentoRepository.findAll();
+
+                for (LancamentoModel lancamento : lancamentos ) {
+                    if (!(lancamento.getId_tipo_lancamento().equals(id))){
+                        tipoLancamentoRepository.deleteById(id);
+                    } else {
+                        throw new DataIntegrityException("Este tp lançamento esta contido em um lançamento!");
+                    }
+                }
+
             } else
             {
                 throw new ObjectNotFoundException("Códido de ID: " + id +" não encontrado!");
@@ -137,5 +155,11 @@ public class TipoLancamentoService {
         }
 
         return tipoLancamentoDtoList;
+    }
+
+    public List<Object> listTipoLancamento(){
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("sp_ListTipoLancamento");
+        List<Object> list = storedProcedureQuery.getResultList();
+        return list;
     }
 }

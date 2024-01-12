@@ -8,18 +8,22 @@ import br.com.david.orcamento.rest.form.LancamentoForm;
 import br.com.david.orcamento.service.exceptions.DataIntegrityException;
 import br.com.david.orcamento.service.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class LancamentoService {
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Autowired
     LancamentoRepository lancamentoRepository;
@@ -52,9 +56,8 @@ public class LancamentoService {
             LocalDateTime dtAtual = LocalDateTime.now();
             LocalDateTime dataAtualFormatada = data.formatarData(dtAtual);
 
-            Optional lancamento = lancamentoRepository.findByNumeroLancamento(lancamentoForm.getNumero_lancamento());
-
             LancamentoModel novoLancamento = convertLancFormToModel(lancamentoForm);
+
             novoLancamento.setData_lancamento(dataAtualFormatada);
             novoLancamento.setData_cadastro(dataAtualFormatada);
             novoLancamento = lancamentoRepository.save(novoLancamento);
@@ -170,14 +173,20 @@ public class LancamentoService {
     public List<LancamentoDTo> convertLancListModelToDTo(List<LancamentoModel> lancamenlList){
         List<LancamentoDTo> lancamentoDtoList = new ArrayList<>();
 
-        for (LancamentoModel lancamento: lancamenlList)
+        for (LancamentoModel lancamento : lancamenlList)
         {
             LancamentoDTo lancamentoDto = new LancamentoDTo();
             lancamentoDto = convertLancModelToDTo(lancamento);
 
             lancamentoDtoList.add(lancamentoDto);
         }
-
         return lancamentoDtoList;
+    }
+
+    public List<Object> listLancamentos(){
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("sp_ListLancamentos");
+        List<Object> list = storedProcedureQuery.getResultList();
+
+        return list;
     }
 }
